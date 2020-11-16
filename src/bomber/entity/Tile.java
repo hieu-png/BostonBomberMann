@@ -1,8 +1,16 @@
 package bomber.entity;
 
 public class Tile extends Entity {
-    Tile(int x, int y, String path) {
+    public Tile() {
 
+
+    }
+    public Tile(Tile other) {
+        this.x = other.x;
+        this.y = other.y;
+        this.canBePassed = other.canBePassed;
+        this.destructible = other.destructible;
+        this.health = other.health;
     }
 
     @Override

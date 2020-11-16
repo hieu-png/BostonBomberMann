@@ -9,6 +9,8 @@ import java.io.FileNotFoundException;
 
 
 public class Texture {
+    public static final int IMAGE_SIZE = 32;
+
     private Image image;
     private int x;
      int y;

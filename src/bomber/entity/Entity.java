@@ -11,13 +11,12 @@ enum passable {
 
 
 public abstract class Entity {
-    public int x;
-    public int y;
-    protected passable canBePassed;
-    public static final int PIXEL_SIZE = 32;
-    protected int health = 2;
-    public boolean active = false;
-    public boolean destructible = true;
+    protected int x;
+    protected int y;
+    protected boolean canBePassed;
+    protected int health = 1;
+    protected boolean active = true;
+    protected boolean destructible = true;
     Texture texture;
 
     public Entity() {
@@ -27,6 +26,7 @@ public abstract class Entity {
     public void setXY(int x, int y) {
         this.x = x;
         this.y = y;
+        if(texture != null)
         texture.setXY(x, y);
     }
 
@@ -53,4 +53,50 @@ public abstract class Entity {
     }
 
     public abstract void Update();
+
+
+    public boolean isDestructible() {
+        return destructible;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public boolean getCanBePassed() {
+        return canBePassed;
+    }
+
+    public Texture getTexture() {
+        return texture;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public void setCanBePassed(boolean canBePassed) {
+        this.canBePassed = canBePassed;
+    }
+
+    public void setDestructible(boolean destructible) {
+        this.destructible = destructible;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
+
 }
