@@ -30,9 +30,11 @@ public class Texture {
 
     Color color;
 
+    public Image getImage() {
+        return image;
+    }
 
-
-    Texture(String path) {
+    public Texture(String path) {
         try {
             image = new Image(new FileInputStream(path));
         } catch (FileNotFoundException e) {

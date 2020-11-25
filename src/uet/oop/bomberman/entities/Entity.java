@@ -27,5 +27,6 @@ public abstract class Entity {
 
         gc.drawImage(base, x * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE);
     }
+
     public abstract void update();
 }

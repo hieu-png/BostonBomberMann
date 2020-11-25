@@ -14,7 +14,7 @@ public class Bomb extends Entity{
 
     }
     @Override
-    public void Update() {
+    public void update() {
         if(timeCounter.getTime() > fuseTime) {
             explode();
         }
