@@ -59,8 +59,12 @@ public abstract class Entity {
     }
 
     public boolean isCollidedWith(Entity other) {
-        double b = Math.sqrt(Math.pow(x - other.getX(), 2) - Math.pow(y - other.getY(), 2));
-        return b < 32;
+        double b = Math.sqrt(
+                        Math.pow(x - other.getX(), 2) +
+                        Math.pow(y - other.getY(), 2)
+        );
+        //System.out.println(b);
+        return b < 0.5;
     }
 
 
@@ -97,8 +101,8 @@ public abstract class Entity {
         }
     }
 
-    public void dealDamage(int damage, Entity other) {
-        other.takeDamage(damage);
+    public boolean dealDamage(int damage, Entity other) {
+        return other.takeDamage(damage);
     }
 
     public boolean takeDamage(int damage) {

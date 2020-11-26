@@ -1,5 +1,6 @@
 package bomber.entity;
 
+import bomber.gameFunction.TimeCounter;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
@@ -12,7 +13,7 @@ public class Player extends Pawn {
     List<Enemy> enemyList;
     Scene scene;
     ArrayList<String> input = new ArrayList<String>();
-
+    TimeCounter tc = new TimeCounter();
     public void setScene(Scene scene) {
         this.scene = scene;
     }
@@ -26,11 +27,17 @@ public class Player extends Pawn {
         }
     }
 
+    @Override
+    public void start() {
+
+    }
+
     public Player() {
         super(System.getProperty("user.dir") + "\\src\\texture\\" + "player" + "North.png",
                 System.getProperty("user.dir") + "\\src\\texture\\" + "player" + "East.png",
                 System.getProperty("user.dir") + "\\src\\texture\\" + "player" + "South.png");
         this.label = "player";
+        canBePassed = true;
     }
 
     public void getInput() {
@@ -78,11 +85,14 @@ public class Player extends Pawn {
 
             }
         }
+        if(input.contains("SPACE")) {
+        }
 
     }
 
     @Override
     public void update() {
+        updateMapInfo();
         getInput();
         handleInput();
         move();

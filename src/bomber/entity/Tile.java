@@ -35,6 +35,11 @@ public class Tile extends Entity {
         this.floorTile = other.floorTile;
     }
 
+    @Override
+    public void destroy() {
+
+    }
+
     public Tile getFloorTile() {
         return floorTile;
     }

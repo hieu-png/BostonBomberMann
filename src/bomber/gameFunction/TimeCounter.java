@@ -4,16 +4,15 @@ import java.util.Timer;
 
 public class TimeCounter {
     //Time when system started;
-    long timeStarted = System.nanoTime();
+    long timeStarted = System.currentTimeMillis();
     public TimeCounter() {
-
     }
     public void resetCounter() {
-        timeStarted = System.nanoTime();
+        timeStarted = System.currentTimeMillis();
     }
 
     public double getTime() {
-        return (System.nanoTime() - timeStarted) / 1000000000;
+        return (System.currentTimeMillis() - timeStarted) / 1000F;
     }
 
 }

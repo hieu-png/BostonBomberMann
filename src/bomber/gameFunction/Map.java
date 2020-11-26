@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Map {
     //0-9 TileLimit
@@ -17,9 +16,10 @@ public class Map {
     public final int TILE_TYPE_LIMIT = 10;
     private List<Entity> entityList;
     public Tile[][] mapTile = new Tile[MAP_HEIGHT][MAP_WIDTH];
+    int[][] mapInfo = new int[MAP_HEIGHT][MAP_WIDTH];
+
     public Tile[] tileId = new Tile[10];
     private Tile floorTile;
-    int[][] map = new int[MAP_HEIGHT][MAP_WIDTH];
 
     public List<Entity> mapTileArrayToList() {
         List<Entity> n = new ArrayList<Entity>();
@@ -37,13 +37,13 @@ public class Map {
     public int[][] createNavigationMap() {
         for (int i = 0; i < MAP_HEIGHT; i++) {
             for (int j = 0; j < MAP_WIDTH; j++) {
-                map[i][j] = mapTile[i][j].getCanBePassed() ? 0 : 1;
+                mapInfo[i][j] = mapTile[i][j].getCanBePassed() ? 0 : 1;
             }
         }
         for (Entity entity : entityList) {
-            map[(int) entity.getY()][(int) entity.getX()] = entity.getCanBePassed() ? 0 : 1;
+            mapInfo[(int) entity.getY()][(int) entity.getX()] = entity.getCanBePassed() ? 0 : 1;
         }
-        return map;
+        return mapInfo;
     }
 
     public boolean isTileEmpty(int x, int y) {
@@ -51,8 +51,8 @@ public class Map {
     }
 
     public boolean isTileEmpty(double x, double y) {
-        System.out.println((int) y + " " + (int) x +
-                (mapTile[(int) y][(int) x].getCanBePassed() ? "true" : "false"));
+       // System.out.println((int) y + " " + (int) x +
+       //         (mapTile[(int) y][(int) x].getCanBePassed() ? "true" : "false"));
         return mapTile[(int) y][(int) x].getCanBePassed();
     }
 

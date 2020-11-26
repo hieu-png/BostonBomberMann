@@ -7,14 +7,41 @@ public abstract class Pawn extends Entity {
     protected String label;
     protected Map map;
     protected double toX = x, toY = y;
-    protected double speed = 2 / (double) Texture.IMAGE_SIZE;
+    private double speed = 2 / (double) Texture.IMAGE_SIZE;
+
+    public void setSpeed(double speed) {
+        this.speed = speed / (double) Texture.IMAGE_SIZE;
+    }
 
     public void setMap(Map map) {
         this.map = map;
+        mapInfo = map.createNavigationMap();
+
     }
+
+    protected int[][] mapInfo;
+    protected int mapUpdateRate = 5;
+    protected int mapUpdateCounter = 0;
 
     public Pawn() {
 
+    }
+
+    public abstract void start();
+
+
+    public void updateMapInfo() {
+        mapUpdateCounter++;
+
+        if (mapUpdateCounter > mapUpdateRate) {
+            mapInfo = map.createNavigationMap();
+            mapUpdateCounter = 0;
+
+        }
+    }
+
+    public boolean checkIfTileEmpty(double x, double y) {
+        return mapInfo[(int) y][(int) x] == 0;
     }
 
     public Pawn(String northTexture, String eastTexture, String southTexture, String label) {
@@ -25,6 +52,7 @@ public abstract class Pawn extends Entity {
 
     public Pawn(String northTexture, String eastTexture, String southTexture) {
         super(northTexture, eastTexture, southTexture);
+
     }
 
     public double moveDirection(Double currentCoordinate, Double targetCoordinate) {
@@ -42,7 +70,7 @@ public abstract class Pawn extends Entity {
     }
 
     public boolean isMoving() {
-        if (map.isTileEmpty(toX, toY)) {
+        if (checkIfTileEmpty(toX, toY)) {
             if (x != toX)
                 return true;
             else if (y != toY) {
@@ -57,7 +85,7 @@ public abstract class Pawn extends Entity {
 
     public void move() {
         //Move in x direction first, then y
-        if (map.isTileEmpty(toX, toY)) {
+        if (checkIfTileEmpty(toX, toY) && active) {
             x = moveDirection(x, toX);
             double i = Double.compare(x, toX);
             if (i > 0) {
