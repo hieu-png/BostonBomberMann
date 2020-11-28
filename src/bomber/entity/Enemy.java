@@ -16,8 +16,9 @@ public abstract class Enemy extends Pawn {
     Player player;
 
     public void enemyIdleNoise() {
+        Sound sound = new Sound();
         if(noiseIdleCounter.getTime() > rdmNoiseRate) {
-            Sound.PlaySound(label+"Idle");
+            sound.playSound(label+"Idle");
             rdmNoiseRate = Game.randomDouble(noiseRate/2, noiseRate*1.5f);
             noiseIdleCounter.resetCounter();
         }

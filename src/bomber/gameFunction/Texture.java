@@ -13,7 +13,7 @@ public class Texture {
 
     private Image image;
     private int x;
-     int y;
+    private int y;
 
     public int getY() {
         return y;

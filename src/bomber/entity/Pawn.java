@@ -8,6 +8,9 @@ public abstract class Pawn extends Entity {
     protected Map map;
     protected double toX = x, toY = y;
     private double speed = 2 / (double) Texture.IMAGE_SIZE;
+    protected int[][] mapInfo;
+    protected int mapUpdateRate = 5;
+    protected int mapUpdateCounter = 0;
 
     public void setSpeed(double speed) {
         this.speed = speed / (double) Texture.IMAGE_SIZE;
@@ -19,9 +22,7 @@ public abstract class Pawn extends Entity {
 
     }
 
-    protected int[][] mapInfo;
-    protected int mapUpdateRate = 5;
-    protected int mapUpdateCounter = 0;
+
 
     public Pawn() {
 

@@ -49,7 +49,7 @@ public class Game extends Application {
 
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         canvas = new Canvas(Texture.IMAGE_SIZE * WIDTH, Texture.IMAGE_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
 

@@ -27,9 +27,9 @@ public class Map {
             for (int j = 0; j < MAP_WIDTH; j++) {
                 n.add(mapTile[i][j]);
 
-                System.out.print(mapTile[i][j].getXY() + " ");
+                //System.out.print(mapTile[i][j].getXY() + " ");
             }
-            System.out.println();
+            //System.out.println();
         }
         return n;
     }
