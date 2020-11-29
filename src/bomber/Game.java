@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game extends Application {
+public class Game extends Canvas {
 
     public static final int WIDTH = 16;
     public static final int HEIGHT = 9;
@@ -31,11 +31,9 @@ public class Game extends Application {
         return Math.random() * (max - min + 1) + min;
     }
     private GraphicsContext gc;
-    private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
     public Map map;
-
     public void addEnemy(Enemy enemy,int x,int y) {
 
         enemy.setMap(map);
@@ -45,28 +43,19 @@ public class Game extends Application {
 
     }
 
+    public Game(double width,double height) {
+        super(width,height);
+    }
 
 
 
-    @Override
-    public void start(Stage stage) {
-        canvas = new Canvas(Texture.IMAGE_SIZE * WIDTH, Texture.IMAGE_SIZE * HEIGHT);
-        gc = canvas.getGraphicsContext2D();
-
-        Group root = new Group();
-        root.getChildren().add(canvas);
-
-        // Tao scene
-        Scene scene = new Scene(root);
-
-        // Them scene vao stage
-        stage.setScene(scene);
-        stage.show();
+    public void start(Scene scene,int level) {
+        gc = this.getGraphicsContext2D();
 
         map = new Map();
         map.loadTile();
         map.setEntityList(entities);
-        map.loadMap(System.getProperty("user.dir") + "\\src\\level\\level1.txt");
+        map.loadMap(System.getProperty("user.dir") + "\\src\\level\\level" + level + ".txt");
 
         stillObjects = map.mapTileArrayToList();
 
@@ -93,20 +82,32 @@ public class Game extends Application {
     }
 
     public void update() {
-        entities.forEach(e -> e.update());
+
+        for(Entity x : entities) {
+
+            if(!x.getActive()) {
+                entities.remove(x);
+            } else {
+                x.update();
+            }
+        }
     }
 
     public void render() {
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc.clearRect(0, 0, this.getWidth(), this.getHeight());
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
     }
 
-    public static void main(String[] args) {
-
-        javafx.application.Application.launch(Game.class);
-
-
+    public boolean playAgain() {
+        for(Entity e : entities) {
+            if(e instanceof Player) {
+                if (!e.getActive()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

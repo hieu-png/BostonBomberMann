@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Player extends Pawn {
 
-    List<Enemy> enemyList;
+    List<Enemy> enemyList = new ArrayList<>();
     Scene scene;
     ArrayList<String> input = new ArrayList<>();
     TimeCounter tc = new TimeCounter();
@@ -20,9 +20,11 @@ public class Player extends Pawn {
     }
 
     public void checkCollision() {
-        for (Enemy enemy : enemyList) {
-            if (isCollidedWith(enemy)) {
-                Sound.playerDead();
+        if(!enemyList.isEmpty()) {
+            for (Enemy enemy : enemyList) {
+                if (isCollidedWith(enemy)) {
+                    Sound.playerDead();
+                }
             }
         }
     }
@@ -59,14 +61,14 @@ public class Player extends Pawn {
         if (!isMoving()) {
             if (input.contains("LEFT")||input.contains("A")) {
                 toX--;
-                Sound.playerDead();
+                //Sound.playerDead();
                 //input.remove("LEFT");
             } else
 
 
             if (input.contains("RIGHT")||input.contains("D")) {
                 toX++;
-                Sound.enemyDead1();
+                //Sound.enemyDead1();
                 //input.remove("RIGHT");
 
             } else
@@ -74,7 +76,7 @@ public class Player extends Pawn {
 
             if (input.contains("UP")||input.contains("W")) {
                 toY--;
-                Sound.getItem();
+                //Sound.getItem();
                 //input.remove("UP");
 
             } else
@@ -82,7 +84,7 @@ public class Player extends Pawn {
 
             if (input.contains("DOWN")||input.contains("S")) {
                 toY++;
-                Sound.no();
+                //Sound.no();
                 //input.remove("DOWN");
 
             } else {
@@ -96,9 +98,11 @@ public class Player extends Pawn {
 
     @Override
     public void update() {
+        //checkCollision();
         updateMapInfo();
         getInput();
         handleInput();
         move();
+
     }
 }

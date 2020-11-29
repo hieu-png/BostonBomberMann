@@ -1,19 +1,10 @@
 package bomber.entity;
 
 
+import bomber.gameFunction.Sound;
 import bomber.gameFunction.Texture;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import uet.oop.bomberman.graphics.Sprite;
-
-import java.awt.*;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 
 
 public abstract class Entity {
@@ -59,12 +50,16 @@ public abstract class Entity {
     }
 
     public boolean isCollidedWith(Entity other) {
-        double b = Math.sqrt(
-                        Math.pow(x - other.getX(), 2) +
-                        Math.pow(y - other.getY(), 2)
-        );
+        if(active) {
+            double b = Math.sqrt(
+                    Math.pow(x - other.getX(), 2) +
+                            Math.pow(y - other.getY(), 2)
+            );
+            return b < 0.5;
+        }
+        return false;
         //System.out.println(b);
-        return b < 0.5;
+
     }
 
 
@@ -124,6 +119,8 @@ public abstract class Entity {
 
     public void destroy() {
         active = false;
+        Sound.playerDead();
+        this.setCanBePassed(true);
     }
 
     // public abstract void Start();
@@ -167,5 +164,8 @@ public abstract class Entity {
         this.health = health;
     }
 
+    public boolean getActive() {
+        return active;
+    }
 
 }

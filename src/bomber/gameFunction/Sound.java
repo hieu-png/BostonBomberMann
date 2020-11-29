@@ -28,6 +28,21 @@ public class Sound  {
         }
     }
 
+    public static void loopSound(String fileName) {
+        String path = (System.getProperty("user.dir") + "\\src\\sound\\" + fileName + ".wav");
+
+        try {
+            File file = new File(path);
+            Clip clip = AudioSystem.getClip();
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(file);
+            clip.open(inputStream);
+
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public static void no(){//nổ
         playSound("Mortar_Explode_Incendiary_1a-resources.assets-3848");
     }
@@ -44,4 +59,7 @@ public class Sound  {
         playSound("Pawn_Megascarab_Wounded_1c-resources.assets-3996");
     }
 
+    public static void ThemeSound() {
+        loopSound("ScannerLongRangeMineral_Ambience_Loop-resources.assets-2554");
+    }
 }
