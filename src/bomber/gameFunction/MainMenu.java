@@ -1,7 +1,6 @@
-package bomber;
+package bomber.gameFunction;
 
-import bomber.gameFunction.Sound;
-import bomber.gameFunction.Texture;
+import bomber.Game;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -20,8 +19,8 @@ import java.util.List;
 
 public class MainMenu extends Application {
 
-    public static final int WIDTH = 16;
-    public static final int HEIGHT = 9;
+//    public static final int WIDTH = 16;
+//    public static final int HEIGHT = 9;
     protected final double fontSize = 36;
 
     private int _level;
@@ -33,7 +32,7 @@ public class MainMenu extends Application {
     @Override
     public void start(Stage stage) {
 
-        game = new Game(Texture.IMAGE_SIZE * WIDTH, Texture.IMAGE_SIZE * HEIGHT);
+        game = new Game(Texture.IMAGE_SIZE * Map.MAP_WIDTH, Texture.IMAGE_SIZE * (Map.MAP_HEIGHT + 2) );
         gc = game.getGraphicsContext2D();
 
         _level = 1;
@@ -133,7 +132,7 @@ public class MainMenu extends Application {
 
     public void setBackGround() {
         try {
-            Image image = new Image(new FileInputStream(System.getProperty("user.dir") + "\\src\\texture\\map\\temp3.png"));
+            Image image = new Image(new FileInputStream(System.getProperty("user.dir") + "\\src\\texture\\mainMenu.png"));
             ImageView imageView = new ImageView(image);
             imageView.setFitHeight(y);
             imageView.setFitWidth(x);
