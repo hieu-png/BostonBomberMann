@@ -11,9 +11,9 @@ import java.util.List;
 
 public class Map {
     //0-9 TileLimit
-    public final int MAP_HEIGHT = 10;
-    public final int MAP_WIDTH = 25;
-    public final int TILE_TYPE_LIMIT = 10;
+    public static final int MAP_HEIGHT = 10;
+    public static final int MAP_WIDTH = 25;
+    public static final int TILE_TYPE_LIMIT = 10;
     private List<Entity> entityList;
     public Tile[][] mapTile = new Tile[MAP_HEIGHT][MAP_WIDTH];
     int[][] mapInfo = new int[MAP_HEIGHT][MAP_WIDTH];
