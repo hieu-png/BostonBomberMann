@@ -23,6 +23,27 @@ public class Game extends Canvas {
     public static final int HEIGHT = 12;
     public double mouseX = 0;
     public double mouseY = 0;
+//-------------------BombLevel,BombNumber,Speed,HpPlayer, and function-------------------------------------
+    private static double playerSpeed = 2;
+    private static double bombLevel = 1;
+    private static double hpPlayer = 1;
+    private static double bombNumber = 1;
+
+    public static void speedUp(double speed) {
+        playerSpeed += speed;
+    }
+    public static void bombLevelUp(double bomblevel) {
+        bombLevel += bomblevel;
+    }
+    public static void HpUp(double Hp) {
+        hpPlayer += Hp;
+    }
+    public static void bombNumberUp(double bombNumberUp) {
+        bombNumber += bombNumberUp;
+    }
+//---------------------End item,speed,.....---------------------------------
+
+
     public static int randomInt(int min, int max) {
 
         return (int) (Math.random() * (max - min + 1) + min);
@@ -71,7 +92,7 @@ public class Game extends Canvas {
         stillObjects = map.mapTileArrayToList();
 
     }
-    public void start(Scene scene, int level) {
+    public void start(int level) {
         gc = this.getGraphicsContext2D();
 
         map = new Map();

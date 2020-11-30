@@ -1,6 +1,7 @@
-package bomber.gameFunction;
+package bomber;
 
-import bomber.Game;
+import bomber.gameFunction.Sound;
+import bomber.gameFunction.Texture;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -13,13 +14,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoardGame extends Application {
+public class MainMenu extends Application {
 
     public static final int WIDTH = 16;
     public static final int HEIGHT = 9;
@@ -68,12 +67,13 @@ public class BoardGame extends Application {
 
         // Them scene vao stage
         stage.setScene(scene);
+        game.setScene(scene);
         stage.show();
 //--------------------Event--------------------------------------------
         startText.setOnMouseClicked(mouseEvent -> {
             root.getChildren().clear();
             root.getChildren().add(game);
-            game.start(scene, _level);
+            game.start( _level);
         });
         levelText.setOnMouseClicked(mouseEvent -> {
             root.getChildren().clear();
@@ -157,7 +157,7 @@ public class BoardGame extends Application {
 
     public static void main(String[] args) {
         Sound.ThemeSound();
-        javafx.application.Application.launch(BoardGame.class);
+        javafx.application.Application.launch(MainMenu.class);
 
 
     }
