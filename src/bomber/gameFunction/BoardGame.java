@@ -133,7 +133,7 @@ public class BoardGame extends Application {
 
     public void setBackGround() {
         try {
-            Image image = new Image(new FileInputStream("C:\\Users\\pc\\IdeaProjects\\BostonBomberMann\\src\\texture\\map\\temp3.png"));
+            Image image = new Image(new FileInputStream(System.getProperty("user.dir") + "\\src\\texture\\map\\temp3.png"));
             ImageView imageView = new ImageView(image);
             imageView.setFitHeight(y);
             imageView.setFitWidth(x);

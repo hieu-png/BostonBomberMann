@@ -1,15 +1,9 @@
 package bomber.gameFunction;
 
-
-import javafx.scene.media.*;
-import javafx.scene.shape.Path;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
-import java.net.URL;
-import java.nio.file.Paths;
 
 public class Sound  {
 
