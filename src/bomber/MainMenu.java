@@ -1,6 +1,8 @@
-package bomber.gameFunction;
+package bomber;
 
-import bomber.Game;
+import bomber.gameFunction.Map;
+import bomber.gameFunction.Sound;
+import bomber.gameFunction.Texture;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
