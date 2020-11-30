@@ -1,6 +1,8 @@
-package bomber.entity;
+package bomber.entity.Enemy;
 
 import bomber.Game;
+import bomber.entity.Pawn;
+import bomber.entity.Player;
 import bomber.gameFunction.Sound;
 import bomber.gameFunction.TimeCounter;
 
@@ -12,8 +14,13 @@ public abstract class Enemy extends Pawn {
     protected double noiseRate = 5;
     protected double rdmNoiseRate = noiseRate;
     TimeCounter noiseIdleCounter = new TimeCounter();
-
     Player player;
+//------------AIbotCui-------------
+    protected EnemyAI enemyAI = new EnemyAI(player,this);
+
+
+//------------End AIbotCui----------
+
 
     public void enemyIdleNoise() {
         Sound sound = new Sound();

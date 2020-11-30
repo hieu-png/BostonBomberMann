@@ -1,10 +1,8 @@
 package bomber.entity;
 
+import bomber.entity.Enemy.Enemy;
 import bomber.gameFunction.Sound;
 import bomber.gameFunction.TimeCounter;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayList;
 import java.util.List;

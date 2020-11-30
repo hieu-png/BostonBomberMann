@@ -1,17 +1,15 @@
 package bomber;
 
 import bomber.entity.*;
+import bomber.entity.Enemy.Enemy;
+import bomber.entity.Enemy.Needle;
 import bomber.gameFunction.Map;
 import bomber.gameFunction.MapEditor;
-import bomber.gameFunction.Texture;
 
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.stage.Stage;
 
 
 import java.util.ArrayList;
