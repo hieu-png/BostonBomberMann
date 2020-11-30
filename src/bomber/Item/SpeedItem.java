@@ -1,11 +1,14 @@
-package bomber.entity;
+package bomber.Item;
 
 import bomber.Game;
+import bomber.entity.Entity;
+import bomber.entity.Player;
+import bomber.StillObject.Tile;
 import bomber.gameFunction.Sound;
 
-public class HpPlayerItem extends Tile{
+public class SpeedItem extends Item {
     private boolean isCollected = false;
-    public HpPlayerItem(String pathOfImage) {
+    public SpeedItem(String pathOfImage) {
         super(pathOfImage);
     }
 
@@ -14,7 +17,7 @@ public class HpPlayerItem extends Tile{
         if(other instanceof Player) {
             if(!isCollected) {
                 Sound.getItem();
-                Game.HpUp(1);
+                Game.speedUp(1);
                 isCollected = true;
             }
         }

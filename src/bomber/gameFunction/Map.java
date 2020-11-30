@@ -1,7 +1,7 @@
 package bomber.gameFunction;
 
 import bomber.entity.Entity;
-import bomber.entity.Tile;
+import bomber.StillObject.Tile;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

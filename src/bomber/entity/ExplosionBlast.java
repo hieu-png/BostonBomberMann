@@ -1,5 +1,6 @@
 package bomber.entity;
 
+import bomber.StillObject.Tile;
 import bomber.gameFunction.Map;
 enum DIRECTION {
     UP,DOWN,LEFT,RIGHT,ALL

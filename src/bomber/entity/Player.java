@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends Pawn {
-
+    List<Bomb> bombs;
     List<Enemy> enemyList = new ArrayList<>();
     ArrayList<String> input;
 

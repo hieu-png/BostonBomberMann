@@ -1,11 +1,14 @@
-package bomber.entity;
+package bomber.Item;
 
 import bomber.Game;
+import bomber.entity.Entity;
+import bomber.entity.Player;
+import bomber.StillObject.Tile;
 import bomber.gameFunction.Sound;
 
-public class BombNumberUpItem extends Tile{
+public class BombLevelItem extends Item {
     private boolean isCollected = false;
-    public BombNumberUpItem(String pathOfImage) {
+    public BombLevelItem(String pathOfImage) {
         super(pathOfImage);
     }
 
@@ -14,7 +17,7 @@ public class BombNumberUpItem extends Tile{
         if(other instanceof Player) {
             if(!isCollected) {
                 Sound.getItem();
-                Game.bombNumberUp(1);
+                Game.bombLevelUp(1);
                 isCollected = true;
             }
         }

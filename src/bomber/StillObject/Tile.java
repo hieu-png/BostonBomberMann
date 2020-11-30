@@ -1,4 +1,6 @@
-package bomber.entity;
+package bomber.StillObject;
+
+import bomber.entity.Entity;
 
 public class Tile extends Entity {
     private Tile floorTile;
