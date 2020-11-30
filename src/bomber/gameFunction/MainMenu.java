@@ -13,16 +13,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoardGame extends Application {
+public class MainMenu extends Application {
 
-    public static final int WIDTH = 16;
-    public static final int HEIGHT = 9;
+    //public static final int WIDTH = 16;
+    //public static final int HEIGHT = 9;
     protected final double fontSize = 36;
 
     private int _level;
@@ -34,8 +32,10 @@ public class BoardGame extends Application {
     @Override
     public void start(Stage stage) {
 
-        game = new Game(Texture.IMAGE_SIZE * WIDTH, Texture.IMAGE_SIZE * HEIGHT);
+        game = new Game(Texture.IMAGE_SIZE * Game.WIDTH, Texture.IMAGE_SIZE * Game.HEIGHT);
+
         gc = game.getGraphicsContext2D();
+        Scene scene;
 
         _level = 1;
         root = new Group();
@@ -63,12 +63,13 @@ public class BoardGame extends Application {
 
         stage.setTitle("Bomberman");
         stage.setResizable(false);
-        Scene scene = new Scene(root);
+        scene = new Scene(root);
         scene.setFill(Color.LIGHTGRAY);
 
         // Them scene vao stage
         stage.setScene(scene);
         stage.show();
+        game.setScene(scene);
 //--------------------Event--------------------------------------------
         startText.setOnMouseClicked(mouseEvent -> {
             root.getChildren().clear();
@@ -133,7 +134,7 @@ public class BoardGame extends Application {
 
     public void setBackGround() {
         try {
-            Image image = new Image(new FileInputStream("C:\\Users\\pc\\IdeaProjects\\BostonBomberMann\\src\\texture\\map\\temp3.png"));
+            Image image = new Image(new FileInputStream(System.getProperty("user.dir") + "\\src\\texture\\mainmenu.png"));
             ImageView imageView = new ImageView(image);
             imageView.setFitHeight(y);
             imageView.setFitWidth(x);
@@ -157,7 +158,7 @@ public class BoardGame extends Application {
 
     public static void main(String[] args) {
         Sound.ThemeSound();
-        javafx.application.Application.launch(BoardGame.class);
+        javafx.application.Application.launch(MainMenu.class);
 
 
     }

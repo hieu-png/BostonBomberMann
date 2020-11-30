@@ -19,6 +19,10 @@ public abstract class Entity {
     protected Texture eastTexture;
     protected Texture southTexture;
 
+    public Texture getNorthTexture() {
+        return northTexture;
+    }
+
     public Entity() {
 
     }
@@ -62,6 +66,31 @@ public abstract class Entity {
 
     }
 
+    public void render(GraphicsContext gc, int x, int y) {
+        Image img = null;
+        int flip = 1;//-1 to flip
+        int xOffset = 0;
+        switch (directionFacing) {
+            case STATIONARY, NORTH -> img = northTexture.getImage();
+            case SOUTH -> img = southTexture.getImage();
+            case EAST -> img = eastTexture.getImage();
+            case WEST -> {
+                img = eastTexture.getImage();
+                flip = -1;
+                xOffset = 1;
+            }
+        }
+        int size = 1;
+
+
+        //ImageView iv = new ImageView(img);
+        //Image base = iv.snapshot(params, null);
+
+        gc.drawImage(img, 0, 0,
+                img.getWidth() * size, img.getHeight() * size,
+                (x + xOffset) * Texture.IMAGE_SIZE * size, y * Texture.IMAGE_SIZE * size,
+                flip * Texture.IMAGE_SIZE * size, Texture.IMAGE_SIZE * size);
+    }
 
     public void render(GraphicsContext gc) {
         if (active) {
@@ -89,7 +118,7 @@ public abstract class Entity {
             gc.drawImage(img, 0, 0,
                     img.getWidth() * size, img.getHeight() * size,
                     (x + xOffset) * Texture.IMAGE_SIZE * size, y * Texture.IMAGE_SIZE * size,
-                    flip * img.getWidth() * size, img.getHeight() * size);
+                    flip * Texture.IMAGE_SIZE * size, Texture.IMAGE_SIZE * size);
 
 
             // gc.drawImage(img,x*Texture.IMAGE_SIZE*size,y*Texture.IMAGE_SIZE*size);

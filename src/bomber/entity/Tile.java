@@ -2,10 +2,19 @@ package bomber.entity;
 
 public class Tile extends Entity {
     private Tile floorTile;
+    private int id;
 
     public Tile() {
 
 
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Tile(String path) {
@@ -15,6 +24,7 @@ public class Tile extends Entity {
     public Tile(Tile other, boolean active) {
         this.x = other.x;
         this.y = other.y;
+        this.id = other.id;
         this.canBePassed = other.canBePassed;
         this.destructible = other.destructible;
         this.health = other.health;
@@ -28,6 +38,7 @@ public class Tile extends Entity {
     public Tile(Tile other) {
         this.x = other.x;
         this.y = other.y;
+        this.id = other.id;
         this.canBePassed = other.canBePassed;
         this.destructible = other.destructible;
         this.health = other.health;

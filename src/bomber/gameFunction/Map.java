@@ -11,8 +11,8 @@ import java.util.List;
 
 public class Map {
     //0-9 TileLimit
-    public final int MAP_HEIGHT = 8;
-    public final int MAP_WIDTH = 16;
+    public final int MAP_HEIGHT = 10;
+    public final int MAP_WIDTH = 25;
     public final int TILE_TYPE_LIMIT = 10;
     private List<Entity> entityList;
     public Tile[][] mapTile = new Tile[MAP_HEIGHT][MAP_WIDTH];
@@ -32,6 +32,12 @@ public class Map {
             //System.out.println();
         }
         return n;
+    }
+
+    public void changeTile(int x, int y, int id) {
+
+        mapTile[y][x] = new Tile(tileId[id]);
+        mapTile[y][x].setXY(x,y);
     }
 
     public int[][] createNavigationMap() {
@@ -63,6 +69,8 @@ public class Map {
             String s = String.format(System.getProperty("user.dir") +
                     "\\src\\texture\\map\\%d.png", i);
             tileId[i] = new Tile(s);
+            tileId[i].setId(i);
+            System.out.println(tileId[i].getId());
 
         }
         //Plasteel floor
@@ -122,8 +130,11 @@ public class Map {
                 bufferString = br.readLine();
                 for (int j = 0; j < MAP_WIDTH; j++) {
                     System.out.print(bufferString.charAt(j));
-                    mapTile[i][j] = new Tile(tileId[bufferString.charAt(j) - 48]);
-                    mapTile[i][j].setXY(j, i);
+                    //mapTile[i][j] = new Tile(tileId[bufferString.charAt(j) - 48]);
+
+                    changeTile(j,i,bufferString.charAt(j) - 48);
+
+                    //System.out.print(mapTile[j][i].getId());
                 }
                 System.out.println();
             }

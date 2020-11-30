@@ -12,12 +12,13 @@ import java.util.List;
 public class Player extends Pawn {
 
     List<Enemy> enemyList = new ArrayList<>();
-    Scene scene;
-    ArrayList<String> input = new ArrayList<>();
-    TimeCounter tc = new TimeCounter();
-    public void setScene(Scene scene) {
-        this.scene = scene;
+    ArrayList<String> input;
+
+    public void setInput(ArrayList<String> input) {
+        this.input = input;
     }
+
+    TimeCounter tc = new TimeCounter();
 
     public void checkCollision() {
         if(!enemyList.isEmpty()) {
@@ -42,56 +43,43 @@ public class Player extends Pawn {
         canBePassed = true;
     }
 
-    public void getInput() {
-        scene.setOnKeyPressed(keyEvent -> {
-            String code = keyEvent.getCode().toString();
-            System.out.println("Input detected: " + code);
+    public void createNormalBomb(){
 
-            if (!input.contains(code))
-                input.add(code);
-        });
-        scene.setOnKeyReleased(keyEvent -> {
-            String code = keyEvent.getCode().toString();
-            System.out.println("Input released: " + code);
-            input.remove(code);
-        });
     }
+
 
     public void handleInput() {
         if (!isMoving()) {
             if (input.contains("LEFT")||input.contains("A")) {
                 toX--;
-                //Sound.playerDead();
-                //input.remove("LEFT");
+
             } else
 
 
             if (input.contains("RIGHT")||input.contains("D")) {
                 toX++;
-                //Sound.enemyDead1();
-                //input.remove("RIGHT");
+
 
             } else
 
 
             if (input.contains("UP")||input.contains("W")) {
                 toY--;
-                //Sound.getItem();
-                //input.remove("UP");
+
 
             } else
 
 
             if (input.contains("DOWN")||input.contains("S")) {
                 toY++;
-                //Sound.no();
-                //input.remove("DOWN");
+
 
             } else {
 
             }
         }
         if(input.contains("SPACE")) {
+
         }
 
     }
@@ -100,7 +88,6 @@ public class Player extends Pawn {
     public void update() {
         //checkCollision();
         updateMapInfo();
-        getInput();
         handleInput();
         move();
 
