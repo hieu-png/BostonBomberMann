@@ -2,6 +2,7 @@ package bomber.entity;
 
 import bomber.Game;
 import bomber.gameFunction.Map;
+import bomber.gameFunction.Sound;
 import bomber.gameFunction.TimeCounter;
 
 public class Bomb extends Entity {
@@ -24,6 +25,7 @@ public class Bomb extends Entity {
         this.mapRef = mapRef;
         this.range = range;
         this.fuseTime = fuseTime;
+        Sound.playSound("beepSmall");
         changeStat();
     }
 
@@ -33,7 +35,8 @@ public class Bomb extends Entity {
 
     public void explode() {
         if(!exploded) {
-            mapRef.getGame().addEntity(new ExplosionBlast(x, y, range, mapRef, facingDirection.ALL));
+            Sound.playSound("explosionBomb");
+            mapRef.getGame().addEntity(new ExplosionBlast(x, y, range, mapRef, facingDirection.ALL, 0));
            setToDelete(true);
             exploded = true;
         }
