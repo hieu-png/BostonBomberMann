@@ -1,5 +1,6 @@
 package bomber.gameFunction;
 
+import bomber.Game;
 import bomber.entity.Entity;
 import bomber.StillObject.Tile;
 
@@ -15,8 +16,22 @@ public class Map {
     public static final int MAP_WIDTH = 25;
     public static final int TILE_TYPE_LIMIT = 10;
     private List<Entity> entityList;
+
+    public List<Entity> getEntityList() {
+        return entityList;
+    }
+
     public Tile[][] mapTile = new Tile[MAP_HEIGHT][MAP_WIDTH];
     int[][] mapInfo = new int[MAP_HEIGHT][MAP_WIDTH];
+    private Game game;
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
 
     public Tile[] tileId = new Tile[10];
     private Tile floorTile;
@@ -37,7 +52,7 @@ public class Map {
     public void changeTile(int x, int y, int id) {
 
         mapTile[y][x] = new Tile(tileId[id]);
-        mapTile[y][x].setXY(x,y);
+        mapTile[y][x].setXY(x, y);
     }
 
     public int[][] createNavigationMap() {
@@ -53,14 +68,61 @@ public class Map {
     }
 
     public boolean isTileEmpty(int x, int y) {
-        return mapTile[x][y].getCanBePassed();
+        if (validTile(x, y))
+            return mapTile[y][x].getCanBePassed();
+        else
+            return false;
     }
 
-    public boolean isTileEmpty(double x, double y) {
-       // System.out.println((int) y + " " + (int) x +
-       //         (mapTile[(int) y][(int) x].getCanBePassed() ? "true" : "false"));
-        return mapTile[(int) y][(int) x].getCanBePassed();
+    public boolean validTile(int x, int y) {
+        if (x >= 0
+                && y >= 0
+                && x < Map.MAP_WIDTH - 1
+                && y < Map.MAP_HEIGHT - 1)
+            return true;
+        else
+            return false;
     }
+
+
+    public boolean isTileEmpty(double x, double y) {
+       // System.out.println((int) x + " " + (int) y +
+              //   (mapTile[(int) y][(int) x].getCanBePassed() ? "true" : "false"));
+        return isTileEmpty((int) x, (int) y);
+    }
+
+    public boolean isTileDestructible(int x, int y) {
+        if(validTile(x,y)) {
+            return mapTile[y][x].isDestructible();
+        }
+        return false;
+    }
+
+    public boolean isTileDestructible(double x, double y) {
+        return isTileDestructible((int)x,(int)y);
+    }
+
+    public boolean destroyTile(double x, double y) {
+        return destroyTile((int) x, (int) y);
+    }
+
+    public boolean destroyTile(int x, int y) {
+        if (validTile(x, y)) {
+            Tile tileRef = mapTile[y][x];
+            if (tileRef.isDestructible()) {
+                if (tileRef.getFloorTile() != null)
+                    changeTile(x, y, tileRef.getFloorTile().getId());
+                else {
+                    //Them roi ra do o day
+                }
+                return true;
+            }
+            else
+            return  false;
+        }
+        return false;
+    }
+
 
     public void loadTile() {
 
@@ -132,7 +194,7 @@ public class Map {
                     System.out.print(bufferString.charAt(j));
                     //mapTile[i][j] = new Tile(tileId[bufferString.charAt(j) - 48]);
 
-                    changeTile(j,i,bufferString.charAt(j) - 48);
+                    changeTile(j, i, bufferString.charAt(j) - 48);
 
                     //System.out.print(mapTile[j][i].getId());
                 }

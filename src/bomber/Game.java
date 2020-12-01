@@ -12,16 +12,15 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Game extends Canvas {
-
+    public static final String textureFolderPath = System.getProperty("user.dir") + "\\src\\texture\\";
     public static final int WIDTH = 25;
     public static final int HEIGHT = 12;
     public double mouseX = 0;
     public double mouseY = 0;
-//-------------------BombLevel,BombNumber,Speed,HpPlayer, and function-------------------------------------
+    //-------------------BombLevel,BombNumber,Speed,HpPlayer, and function-------------------------------------
     private static double playerSpeed = 2;
     private static double bombLevel = 1;
     private static double hpPlayer = 1;
@@ -30,12 +29,15 @@ public class Game extends Canvas {
     public static void speedUp(double speed) {
         playerSpeed += speed;
     }
+
     public static void bombLevelUp(double bomblevel) {
         bombLevel += bomblevel;
     }
+
     public static void HpUp(double Hp) {
         hpPlayer += Hp;
     }
+
     public static void bombNumberUp(double bombNumberUp) {
         bombNumber += bombNumberUp;
     }
@@ -53,7 +55,6 @@ public class Game extends Canvas {
         this.scene = scene;
     }
 
-    public ArrayList<String> input = new ArrayList<>();
 
     public static double randomDouble(double min, double max) {
 
@@ -62,6 +63,7 @@ public class Game extends Canvas {
 
     private GraphicsContext gc;
     private Player player;
+
     public GraphicsContext getGc() {
         return gc;
     }
@@ -69,17 +71,30 @@ public class Game extends Canvas {
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
 
+    private List<Entity> getEntitiesList() {
+        return entities;
+    }
 
-    public Map map;
-    MapEditor me;
 
     public void addEnemy(Enemy enemy, int x, int y) {
 
         enemy.setMap(map);
         enemy.setXY(x, y);
         enemy.start();
-        entities.add(enemy);
+        addEntity(enemy);
 
+    }
+
+    Stack<Entity> addStack = new Stack<>();
+
+    public void addEntity(Entity e) {
+        addStack.push(e);
+    }
+
+    Stack<Entity> removeStack = new Stack<>();
+
+    public void removeEntity(Entity e) {
+        removeStack.push(e);
     }
 
     public Game(double width, double height) {
@@ -90,20 +105,29 @@ public class Game extends Canvas {
         stillObjects = map.mapTileArrayToList();
 
     }
+
+
+    public ArrayList<String> input = new ArrayList<>();
+
+    public Map map;
+    MapEditor me;
+
     public void start(int level) {
         gc = this.getGraphicsContext2D();
 
         map = new Map();
+        map.setGame(this);
+
         map.loadTile();
         map.setEntityList(entities);
         map.loadMap(System.getProperty("user.dir") + "\\src\\level\\level" + level + ".txt");
-            updateMap();
+        updateMap();
 
         me = new MapEditor();
         me.setMap(map);
         me.setGame(this);
         //Player
-         player = new Player();
+        player = new Player();
         player.setMap(map);
         player.setXY(1, 1);
         player.setInput(input);
@@ -118,6 +142,7 @@ public class Game extends Canvas {
             @Override
             public void handle(long l) {
                 render();
+
                 update();
             }
         };
@@ -127,15 +152,38 @@ public class Game extends Canvas {
 
     public void update() {
         getInput();
-        for (Entity x : entities) {
+        //can not remove or add while in the middle of iterating through list, have to use this;
 
-            if (!x.getActive()) {
-                entities.remove(x);
+        for (Entity e : entities) {
+            if (e.isToDelete()) {
+                removeEntity(e);
             } else {
-                x.update();
+                e.update();
             }
+
         }
+        while (!addStack.isEmpty()) {
+            entities.add(addStack.pop());
+        }
+        while(!removeStack.isEmpty()) {
+            entities.remove(removeStack.pop());
+        }
+
+        /*
+        Iterator<Entity> e = entities.iterator();
+        while (e.hasNext()) {
+            /*
+            if (e.isToDelete()) {
+                entities.remove(e);
+            } else {
+                e.update;
+            }
+
+    }*/
+
+
         me.update();
+        updateMap();
 
     }
 
@@ -173,11 +221,11 @@ public class Game extends Canvas {
             input.remove(code);
         });
         scene.setOnMouseMoved(mouseEvent -> {
-            mouseX  = mouseEvent.getX();
+            mouseX = mouseEvent.getX();
             mouseY = mouseEvent.getY();
         });
         scene.setOnMouseDragged(mouseEvent -> {
-            mouseX  = mouseEvent.getX();
+            mouseX = mouseEvent.getX();
             mouseY = mouseEvent.getY();
         });
         scene.setOnKeyPressed(keyEvent -> {

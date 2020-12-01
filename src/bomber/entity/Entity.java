@@ -14,10 +14,21 @@ public abstract class Entity {
     protected int health = 1;
     protected boolean active = true;
     protected boolean destructible = true;
+    protected boolean toDelete = false;
+    public boolean destroyOnDeath = false;
+    public void setToDelete(boolean toDelete) {
+        this.toDelete = toDelete;
+    }
+
+    public boolean isToDelete() {
+        return toDelete;
+    }
+
     protected facingDirection directionFacing = facingDirection.NORTH;
     protected Texture northTexture;
     protected Texture eastTexture;
     protected Texture southTexture;
+    protected Texture allTexture;
 
     public Texture getNorthTexture() {
         return northTexture;
@@ -33,6 +44,12 @@ public abstract class Entity {
     }
 
     public Entity(String northTexture, String eastTexture, String southTexture) {
+        this.northTexture = new Texture(northTexture);
+        this.eastTexture = new Texture(eastTexture);
+        this.southTexture = new Texture(southTexture);
+    }
+    public Entity(String northTexture, String eastTexture, String southTexture, String allTexture) {
+        this.allTexture = new Texture(allTexture);
         this.northTexture = new Texture(northTexture);
         this.eastTexture = new Texture(eastTexture);
         this.southTexture = new Texture(southTexture);
@@ -54,7 +71,7 @@ public abstract class Entity {
     }
 
     public boolean isCollidedWith(Entity other) {
-        if(active) {
+        if (active) {
             double b = Math.sqrt(
                     Math.pow(x - other.getX(), 2) +
                             Math.pow(y - other.getY(), 2)
@@ -71,6 +88,7 @@ public abstract class Entity {
         int flip = 1;//-1 to flip
         int xOffset = 0;
         switch (directionFacing) {
+            case ALL -> img = allTexture.getImage();
             case STATIONARY, NORTH -> img = northTexture.getImage();
             case SOUTH -> img = southTexture.getImage();
             case EAST -> img = eastTexture.getImage();
@@ -109,6 +127,9 @@ public abstract class Entity {
                     flip = -1;
                     xOffset = 1;
                 }
+                case ALL -> {
+                    img = allTexture.getImage();
+                }
             }
             int size = 1;
 
@@ -133,7 +154,10 @@ public abstract class Entity {
         if (destructible) {
             health -= damage;
             if (health <= 0) {
-                destroy();
+                if(destroyOnDeath)
+                    destroy();
+                    else
+                deactivate();
             }
             return true;
         } else {
@@ -145,11 +169,13 @@ public abstract class Entity {
     public void spawn() {
         active = true;
     }
-
+    //call when delete
     public void destroy() {
+        toDelete = true;
+    }
+    //activation, still can be reactivated
+    public void deactivate() {
         active = false;
-        Sound.playerDead();
-        this.setCanBePassed(true);
     }
 
     // public abstract void Start();

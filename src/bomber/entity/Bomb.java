@@ -1,22 +1,49 @@
 package bomber.entity;
 
+import bomber.Game;
+import bomber.gameFunction.Map;
 import bomber.gameFunction.TimeCounter;
 
-public class Bomb extends Entity{
-    public Bomb() {
+public class Bomb extends Entity {
+    Map mapRef;
+    boolean exploded = false;
+    void changeStat() {
         this.destructible = false;
         this.canBePassed = false;
         this.timeCounter = new TimeCounter();
     }
-    TimeCounter timeCounter;
-    double fuseTime = 2f;
-    public void explode() {
 
+    public Bomb() {
+        changeStat();
     }
+
+    public Bomb(double x, double y, int range, double fuseTime, Map mapRef, int bombType) {
+        super(Game.textureFolderPath + "Bomb" + bombType + ".png");
+        this.x = x;
+        this.y = y;
+        this.mapRef = mapRef;
+        this.range = range;
+        this.fuseTime = fuseTime;
+        changeStat();
+    }
+
+    TimeCounter timeCounter;
+    int range = 1;
+    double fuseTime = 2f;
+
+    public void explode() {
+        if(!exploded) {
+            mapRef.getGame().addEntity(new ExplosionBlast(x, y, range, mapRef, facingDirection.ALL));
+           setToDelete(true);
+            exploded = true;
+        }
+    }
+
     @Override
     public void update() {
-        if(timeCounter.getTime() > fuseTime) {
+        if (timeCounter.getTime() > fuseTime) {
             explode();
         }
+
     }
 }

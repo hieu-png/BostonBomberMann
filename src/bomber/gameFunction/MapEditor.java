@@ -1,6 +1,7 @@
 package bomber.gameFunction;
 
 import bomber.Game;
+import bomber.entity.Bomb;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.paint.Color;
@@ -20,7 +21,8 @@ public class MapEditor {
     int toY = 0;
     int x;
     int y;
-
+    TimeCounter bombCounter = new TimeCounter();
+    double bombRate = 0.2;
     //int toX = x;
     //int toY = y;
 
@@ -30,7 +32,7 @@ public class MapEditor {
     }
 
     public int coordinateDown(double axis) {
-        return (int) (axis / Texture.IMAGE_SIZE) ;
+        return (int) (axis / Texture.IMAGE_SIZE);
     }
 
     public void update() {
@@ -78,15 +80,24 @@ public class MapEditor {
                 }
             }
 
-                x = toX;
-                y = toY;
+            x = toX;
+            y = toY;
 
-            if (game.input.contains("Z")||game.input.contains("PRIMARY")) {
+            if (game.input.contains("PRIMARY")) {
                 map.changeTile(x, y, selectedTile);
-                game.updateMap();
+                //game.updateMap();
+            }
+            if (game.input.contains("SECONDARY")) {
+                map.destroyTile(x, y);
+                //game.updateMap();
             }
             if (game.input.contains("F10")) {
                 exportMap();
+            }
+            if (game.input.contains("Z")) {
+                if(bombCounter.getTime() > bombRate) {
+                game.addEntity(new Bomb(x, y, 2, 2, map, 1));
+                bombCounter.resetCounter();}
             }
         }
     }

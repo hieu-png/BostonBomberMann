@@ -29,6 +29,16 @@ public class Player extends Pawn {
     }
 
     @Override
+    public void destroy() {
+
+    }
+
+    @Override
+    public void deactivate() {
+        super.deactivate();
+    }
+
+    @Override
     public void start() {
 
     }

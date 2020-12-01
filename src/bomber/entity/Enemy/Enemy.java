@@ -45,6 +45,7 @@ public abstract class Enemy extends Pawn {
                 System.getProperty("user.dir") + "\\src\\texture\\enemyPawn\\" + label + "East.png",
                 System.getProperty("user.dir") + "\\src\\texture\\enemyPawn\\" + label + "South.png");
         this.label = label;
+        destroyOnDeath = true;
     }
 
     protected void checkPlayer() {

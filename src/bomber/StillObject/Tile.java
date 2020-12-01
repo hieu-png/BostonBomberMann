@@ -35,6 +35,7 @@ public class Tile extends Entity {
 
 
         this.active = active;
+        this.destroyOnDeath = true;
     }
 
     public Tile(Tile other) {
@@ -46,12 +47,10 @@ public class Tile extends Entity {
         this.health = other.health;
         this.northTexture = other.northTexture;
         this.floorTile = other.floorTile;
+        this.destroyOnDeath = true;
     }
 
-    @Override
-    public void destroy() {
 
-    }
 
     public Tile getFloorTile() {
         return floorTile;
@@ -60,6 +59,8 @@ public class Tile extends Entity {
     public void setFloorTile(Tile floorTile) {
         this.floorTile = floorTile;
     }
+
+
 
     @Override
     public void update() {
