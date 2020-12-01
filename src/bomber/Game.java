@@ -3,6 +3,8 @@ package bomber;
 import bomber.entity.*;
 import bomber.entity.Enemy.Enemy;
 import bomber.entity.Enemy.Needle;
+import bomber.entity.Enemy.Oneal;
+import bomber.entity.Enemy.ThroughtWall;
 import bomber.gameFunction.Map;
 import bomber.gameFunction.MapEditor;
 
@@ -133,11 +135,19 @@ public class Game extends Canvas {
         player.setInput(input);
 
         entities.add(player);
-
+//-------------------------Enemy-----------------------
         Needle b = new Needle();
         b.setPlayer(player);
         addEnemy(b, 8, 6);
 
+        Oneal oneal = new Oneal();
+        oneal.setPlayer(player);
+        addEnemy(oneal,8,6);
+
+        ThroughtWall throughtWall = new ThroughtWall();
+        throughtWall.setPlayer(player);
+        addEnemy(throughtWall,8,6);
+//------------------------End Enemy------------------------
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {

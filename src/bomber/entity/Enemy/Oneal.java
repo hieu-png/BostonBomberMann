@@ -1,39 +1,43 @@
 package bomber.entity.Enemy;
 
-import bomber.Game;
 
-public class Needle extends Enemy {
+import java.util.Random;
 
-
-    public Needle() {
-        super("needle");
+public class Oneal extends Enemy{
+    public Oneal() {
+        super("skullHead");
     }
 
     @Override
     public void start() {
         this.health = 1;
-        this.setSpeed(1);
+        Random random = new Random();
+        this.setSpeed(random.nextInt(2)+1);
         canBePassed = true;
     }
 
     public void movement() {
         enemyAI = new EnemyAI(player,this);
         if (updateCounter > updateRate && !isMoving()) {
-
-            switch (Game.randomInt(0,6)) {
-                case 1: toX++;
-                break;
-                case 2: toY++;
-                break;
-                case 3: toX--;
-                break;
-                case 4: toY--;
-                default:
+            switch (enemyAI.getDirection()) {
+                case WEST:
+                    toX--;
                     break;
+                case EAST:
+                    toX++;
+                    break;
+                case SOUTH:
+                    toY++;
+                    break;
+                case NORTH:
+                    toY--;
+                    break;
+                default: break;
             }
+
+
         }
     }
-
     @Override
     public void update() {
         updateCounter++;
@@ -45,4 +49,5 @@ public class Needle extends Enemy {
         if (updateCounter > updateRate)
             updateCounter = 0;
     }
+
 }
