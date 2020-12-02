@@ -74,6 +74,15 @@ public abstract class Entity {
         return Math.sqrt(Math.pow(x - other.getX(), 2) +
                          Math.pow(y - other.getY(), 2));
     }
+    public double distanceTo(double x, double y) {
+        return Math.sqrt(Math.pow(x - this.getX(), 2) +
+                Math.pow(y - this.getY(), 2));
+    }
+
+    public static double distanceTo(double x1, double y1, double x2, double y2) {
+        return Math.sqrt(Math.pow(x1 - x2, 2) +
+                Math.pow(y1 - y2, 2));
+    }
 
     public boolean isCollidedWith(Entity other) {
             return distanceTo(other) < 0.5;

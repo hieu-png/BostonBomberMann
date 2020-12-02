@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class SkullHead extends Enemy{
     public SkullHead() {
-        super("skullHead");
+        super("skullHead");strengthPoint = 15;
     }
 
     @Override

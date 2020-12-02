@@ -5,6 +5,7 @@ import bomber.Game;
 public class Balloon extends Enemy {
     public Balloon() {
         super("balloon");
+        strengthPoint = 20;
     }
 
     public void start() {

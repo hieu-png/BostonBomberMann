@@ -1,7 +1,6 @@
 package bomber.entity;
 
 import bomber.Game;
-import bomber.Item.Item;
 import bomber.gameFunction.Map;
 import bomber.gameFunction.TimeCounter;
 
@@ -59,9 +58,6 @@ public class ExplosionBlast extends Entity {
                     Game.setHpPlayer(e.health - 1);
                     e.takeDamage(1);
                 }
-            } else if (e instanceof Item) {
-                e.takeDamage(0);
-
             } else if (e.isCollidedWith(this)) {
                 e.takeDamage(1);
 

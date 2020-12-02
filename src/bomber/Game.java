@@ -1,6 +1,6 @@
 package bomber;
 
-import bomber.Item.*;
+import bomber.Item.Item;
 import bomber.StillObject.Gate;
 import bomber.StillObject.Tile;
 import bomber.entity.Enemy.Balloon;
@@ -54,6 +54,40 @@ public class Game extends Canvas {
         return (int) (Math.random() * (max - min + 1) + min);
     }
 
+    public int playerSpawnX = 1;
+    public int playerSpawnY = 1;
+
+    public void spawnEnemy(int strengthPoint) {
+
+        while (strengthPoint > 0) {
+            int tempX = randomInt(0, Map.MAP_WIDTH - 1);
+            int tempY = randomInt(0, Map.MAP_HEIGHT - 1);
+            if (map.createNavigationMap()[tempY][tempX] == 0
+                    && Entity.distanceTo(tempX, tempY, playerSpawnX, playerSpawnY) > 10) {
+                int random = randomInt(0, 100);
+                if (random > 80 && random <= 100) {
+                    strengthPoint -= addEnemy(new Needle(), tempX, tempY);
+                } else if(random > 65) {
+                    strengthPoint -= addEnemy(new SkullHead(), tempX, tempY);
+                } else if (random > 45) {
+                    strengthPoint -= addEnemy(new Balloon(), tempX, tempY);
+                } else if(random>35) {
+
+                } else if(random >25) {
+
+                } else {
+
+                }
+
+
+            }
+
+
+        }
+
+
+    }
+
     Scene scene;
     InGameUI userInterface;
 
@@ -64,7 +98,6 @@ public class Game extends Canvas {
 
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
-    private List<Item> items = new ArrayList<>();
 
 
     Stack<Entity> addStack = new Stack<>();
@@ -114,11 +147,13 @@ public class Game extends Canvas {
         //Player
         player = new Player();
         player.setMapRef(map);
-        player.setXY(1, 1);
+        player.setXY(playerSpawnX, playerSpawnY);
         player.setInput(input);
         player.setHealth(hpPlayer);
         entities.add(player);
+
 //-------------------------Enemy-----------------------
+        /*
         Needle b = new Needle();
         b.setPlayer(player);
         addEnemy(b, 13, 12);
@@ -129,16 +164,19 @@ public class Game extends Canvas {
 
         Balloon throughtWall = new Balloon();
         throughtWall.setPlayer(player);
-        addEnemy(throughtWall, 14, 12);
+        addEnemy(throughtWall, 14, 12);*/
+
 //------------------------End Enemy--------------------------------------------------------------------
 
 //-----------------------Item-----------------------------------------------------------------------------------------
+        /*
         items.add(new ItemPlayerHealth(2, 1));
         items.add(new ItemSpeed(6, 10));
         items.add(new ItemBombRange(11, 4));
         items.add(new ItemBombNumberUp(3, 1));
 
-        entities.addAll(items);
+        entities.addAll(items);*/
+        spawnEnemy(200);
         userInterface = new InGameUI();
         userInterface.setUp(player, me, this);
 //----------------------End Item---------------------------------------------------------------------------------------
@@ -184,7 +222,7 @@ public class Game extends Canvas {
                 if (((Item) e).collided(player)) {
                     e.destroy();
 
-                    entities.remove(e);
+                    // entities.remove(e);
                 }
             } else {
                 e.update();
@@ -218,7 +256,7 @@ public class Game extends Canvas {
         userInterface.render(gc);
     }
 
-    public boolean isplayAgain() {
+    public boolean isPlayAgain() {
         for (Entity e : entities) {
             if (e instanceof Player) {
                 if (!e.getActive()) {
@@ -296,14 +334,15 @@ public class Game extends Canvas {
         this.mainMenu = mainMenu;
     }
 
-    public void addEnemy(Enemy enemy, int x, int y) {
+    public int addEnemy(Enemy enemy, int x, int y) {
 
         enemy.setMapRef(map);
         enemy.setXY(x, y);
+        enemy.setPlayer(player);
         enemy.start();
         addEntity(enemy);
         numOfEnemy++;
-
+        return enemy.strengthPoint;
     }
 
     public GraphicsContext getGc() {
