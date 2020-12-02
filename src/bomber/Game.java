@@ -18,7 +18,6 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -31,58 +30,25 @@ public class Game extends Canvas {
     public double mouseY = 0;
     MainMenu mainMenu;
 
-    public void setMainMenu(MainMenu mainMenu) {
-        this.mainMenu = mainMenu;
-    }
+
     //-------------------So luong Enemy dang trong map------------------
     public int numOfEnemy = 0;
+
+
+    private boolean gatePassed = false;
+
+    private static double playerSpeed = 2;
+    private static int bombLevel = 0;
+    private static int hpPlayer = 1;
+    private static double bombNumber = 0;
+
 
     public int getNumOfEnemy() {
         return numOfEnemy;
     }
 
-    private boolean gatePassed = false;
 
-    public void setGatePassed(boolean gatePassed) {
-        this.gatePassed = gatePassed;
-    }
-    public boolean getGatePassed() {
-        return gatePassed;
-    }
-
-    public boolean isGatePassed() {
-        return gatePassed;
-
-    }
-    //-------------------------------End so luong enemy---------------------
-
-    //-------------------BombLevel,BombNumber,Speed,HpPlayer, and function-------------------------------------
-    private static double playerSpeed = 2;
-    private static int bombLevel = 0;
-    private static int hpPlayer = 1;
-    private static double bombNumber = 0;
-    public static void speedUp(double speed) {
-        System.out.print(playerSpeed);
-        playerSpeed += speed;
-        System.out.println(" : -> Speed up successful : -> " + playerSpeed);
-    }
-    public static void bombLevelUp(double bomblevel) {
-        System.out.print(playerSpeed);
-        bombLevel += bomblevel;
-        System.out.println(" : -> bombLevelUp successful : -> " + bomblevel);
-
-    }
-    public static void HpUp(double Hp) {
-        System.out.print(hpPlayer);
-        hpPlayer += Hp;
-        System.out.println(" : -> HpUp successful : -> " + hpPlayer);
-    }
-    public static void bombNumberUp(double bombNumberUp) {
-        System.out.print(bombNumberUp);
-        bombNumber += bombNumberUp;
-        System.out.println(" : -> bombNumberUp successful : -> " + bombNumberUp);
-    }
-//---------------------End item,speed,.....---------------------------------
+    //---------------------End item,speed,.....---------------------------------
     public static int randomInt(int min, int max) {
 
         return (int) (Math.random() * (max - min + 1) + min);
@@ -90,41 +56,16 @@ public class Game extends Canvas {
 
     Scene scene;
     InGameUI userInterface;
-    public void setScene(Scene scene) {
-        this.scene = scene;
-    }
 
-
-    public static double randomDouble(double min, double max) {
-
-        return Math.random() * (max - min + 1) + min;
-    }
 
     private GraphicsContext gc;
     private Player player;
 
-    public GraphicsContext getGc() {
-        return gc;
-    }
 
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
     private List<Item> items = new ArrayList<>();
 
-    private List<Entity> getEntitiesList() {
-        return entities;
-    }
-
-
-    public void addEnemy(Enemy enemy, int x, int y) {
-
-        enemy.setMapRef(map);
-        enemy.setXY(x, y);
-        enemy.start();
-        addEntity(enemy);
-        numOfEnemy++;
-
-    }
 
     Stack<Entity> addStack = new Stack<>();
 
@@ -142,10 +83,6 @@ public class Game extends Canvas {
         super(width, height);
     }
 
-    public void updateMap() {
-        stillObjects = map.mapTileArrayToList();
-
-    }
 
     public ArrayList<String> input = new ArrayList<>();
 
@@ -155,6 +92,7 @@ public class Game extends Canvas {
     Texture crackStage1;
     Texture crackStage2;
     Texture crackStage3;
+
     public void start(int level) {
         gc = this.getGraphicsContext2D();
         crackStage1 = new Texture(textureFolderPath + "crack1.png");
@@ -201,7 +139,7 @@ public class Game extends Canvas {
         items.add(new ItemBombNumberUp(3, 1));
 
         entities.addAll(items);
-         userInterface = new InGameUI();
+        userInterface = new InGameUI();
         userInterface.setUp(player, me, this);
 //----------------------End Item---------------------------------------------------------------------------------------
         AnimationTimer timer = new AnimationTimer() {
@@ -306,6 +244,7 @@ public class Game extends Canvas {
             input.remove(code);
         });
     }
+
     public void newGame() {
         gc.clearRect(0, 0, this.getWidth(), this.getHeight());
         if (!this.entities.isEmpty()) {
@@ -319,4 +258,81 @@ public class Game extends Canvas {
         numOfEnemy = 0;
         player = null;
     }
+
+    public void setGatePassed(boolean gatePassed) {
+        this.gatePassed = gatePassed;
+    }
+
+    public boolean getGatePassed() {
+        return gatePassed;
+    }
+
+    public boolean isGatePassed() {
+        return gatePassed;
+
+    }
+
+    public void setMainMenu(MainMenu mainMenu) {
+        this.mainMenu = mainMenu;
+    }
+
+    public void addEnemy(Enemy enemy, int x, int y) {
+
+        enemy.setMapRef(map);
+        enemy.setXY(x, y);
+        enemy.start();
+        addEntity(enemy);
+        numOfEnemy++;
+
+    }
+
+    public GraphicsContext getGc() {
+        return gc;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+
+    public static double randomDouble(double min, double max) {
+
+        return Math.random() * (max - min + 1) + min;
+    }
+
+    public void updateMap() {
+        stillObjects = map.mapTileArrayToList();
+
+    }
+
+    public static void speedUp(double speed) {
+        System.out.print(playerSpeed);
+        playerSpeed += speed;
+        System.out.println(" : -> Speed up successful : -> " + playerSpeed);
+    }
+
+    public static void bombLevelUp(double bomblevel) {
+        System.out.print(playerSpeed);
+        bombLevel += bomblevel;
+        System.out.println(" : -> bombLevelUp successful : -> " + bomblevel);
+
+    }
+
+    public static void HpUp(double Hp) {
+        System.out.print(hpPlayer);
+        hpPlayer += Hp;
+        System.out.println(" : -> HpUp successful : -> " + hpPlayer);
+    }
+
+    public static void bombNumberUp(double bombNumberUp) {
+        System.out.print(
+                bombNumberUp);
+        bombNumber += bombNumberUp;
+        System.out.println(" : -> bombNumberUp successful : -> " + bombNumberUp);
+    }
+
+    private List<Entity> getEntitiesList() {
+        return entities;
+    }
+
 }

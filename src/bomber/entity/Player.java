@@ -111,14 +111,14 @@ public class Player extends Pawn {
             }
             if (input.contains("SPACE")) {
                 //System.out.println("Speed : " + this.speed*(double) Texture.IMAGE_SIZE);
-
-                switch (selectedBomb) {
-                    case 0 -> placeBomb();
-                    case 1 -> placeDynamite();
-                    case 2 -> placeGasolineBarrel();
-                    case 3 -> placeMine();
-                    case 4 -> placeGasCanister();
-                }
+                if (checkIfTileEmpty(x, y))
+                    switch (selectedBomb) {
+                        case 0 -> placeBomb();
+                        case 1 -> placeDynamite();
+                        case 2 -> placeGasolineBarrel();
+                        case 3 -> placeMine();
+                        case 4 -> placeGasCanister();
+                    }
 
             }
         } else moved = true;
