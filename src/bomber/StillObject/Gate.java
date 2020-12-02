@@ -15,13 +15,16 @@ public class Gate extends Tile {
     }
 
     public boolean collide(Entity e) {
+        boolean passed = false;
         if (e instanceof Player) {
             if (game.getNumOfEnemy() == 0 && this.isCollidedWith(e)) {
+                passed = true;
                 Sound.getItem();
                 game.getMainMenu().nextLevel();
+
             }
         }
-        return false;
+        return passed;
     }
 
     @Override

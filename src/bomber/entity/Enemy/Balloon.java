@@ -34,8 +34,10 @@ public class Balloon extends Enemy{
 
     @Override
     public boolean checkIfTileEmpty(double x, double y) {
-        if(x == Game.WIDTH-1 || y == Game.HEIGHT-1 || x ==0 || y == 0) return false;
-        return true;
+        if (x <= Game.WIDTH - 1 && y <= Game.HEIGHT - 1 && x >= 0 && y >= 0)
+            return true;
+        else
+            return false;
     }
     @Override
     public void update() {

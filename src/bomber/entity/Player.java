@@ -87,12 +87,13 @@ public class Player extends Pawn {
                 toY++;
 
 
-            } else {
-
+            } else if(input.contains("V")){
+                System.out.println();
             }
+            else {}
             if (input.contains("SPACE")) {
                 //System.out.println("Speed : " + this.speed*(double) Texture.IMAGE_SIZE);
-                //System.out.println(selectedBomb);
+
                 switch (selectedBomb) {
                     case 0 -> placeBomb();
                     case 1 -> placeDynamite();

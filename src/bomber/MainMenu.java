@@ -153,6 +153,7 @@ public class MainMenu extends Application {
     }
 
     public void nextLevel() {
+        System.out.println("next level");
         if(_level < 2) _level++;
 
         root.getChildren().clear();

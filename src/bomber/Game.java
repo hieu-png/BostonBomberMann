@@ -1,14 +1,14 @@
 package bomber;
 
-import bomber.Item.HpPlayerItem;
 import bomber.Item.Item;
-import bomber.Item.SpeedItem;
+import bomber.Item.ItemPlayerHealth;
+import bomber.Item.ItemSpeed;
 import bomber.StillObject.Gate;
 import bomber.StillObject.Tile;
+import bomber.entity.Enemy.Balloon;
 import bomber.entity.Enemy.Enemy;
 import bomber.entity.Enemy.Needle;
 import bomber.entity.Enemy.SkullHead;
-import bomber.entity.Enemy.Balloon;
 import bomber.entity.Entity;
 import bomber.entity.Player;
 import bomber.gameFunction.Map;
@@ -164,7 +164,7 @@ public class Game extends Canvas {
         map.loadMap(System.getProperty("user.dir") + "\\src\\level\\level" + level + ".txt");
         updateMap();
         Gate gate = new Gate(this);
-        gate.setXY(this.WIDTH - 1, this.HEIGHT / 2 + 1);
+        gate.setXY(this.WIDTH , this.HEIGHT / 2 + 1);
         entities.add(gate);
         me = new MapEditor();
         me.setMap(map);
@@ -210,10 +210,6 @@ public class Game extends Canvas {
 
     }
 
-    //    private static double playerSpeed = 2;
-//    private static double bombLevel = 1;
-//    private static double hpPlayer = 1;
-//    private static double bombNumber = 1;
     public void update() {
         getInput();
         //can not remove or add while in the middle of iterating through list, have to use this;

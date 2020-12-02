@@ -3,8 +3,8 @@ package bomber.entity.Enemy;
 
 import java.util.Random;
 
-public class Oneal extends Enemy{
-    public Oneal() {
+public class SkullHead extends Enemy{
+    public SkullHead() {
         super("skullHead");
     }
 
