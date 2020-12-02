@@ -83,7 +83,12 @@ public abstract class Pawn extends Entity {
             return false;
         }
     }
-
+    public double getToX() {
+        return toX;
+    }
+    public double getToY() {
+        return toY;
+    }
     public void move() {
         //Move in x direction first, then y
         if (checkIfTileEmpty(toX, toY) && active) {

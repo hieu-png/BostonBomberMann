@@ -31,6 +31,10 @@ public class MainMenu extends Application {
     private Group root;
     double x,y;
 
+    public Game getGame() {
+        return game;
+    }
+
     @Override
     public void start(Stage stage) {
 
@@ -113,7 +117,7 @@ public class MainMenu extends Application {
 
         });
 //-------------------End event------------------------------------------
-        if(game.playAgain()) {
+        if(game.isplayAgain()) {
             drawPlayAgain();
         }
     }
@@ -149,7 +153,12 @@ public class MainMenu extends Application {
     }
 
     public void nextLevel() {
-        _level++;
+        if(_level < 2) _level++;
+
+        root.getChildren().clear();
+        set_level(_level);
+        root.getChildren().add(game);
+        game.start( _level);
     }
 
     public void set_level(int _level) {

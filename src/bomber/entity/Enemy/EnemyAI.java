@@ -42,10 +42,7 @@ public class EnemyAI {
         Random random = new Random();
         if(random.nextInt(2) == 0) return diNgang();
         return diDoc();
-//        if (enemy.getX() - player.getX() < enemy.getY() - player.getY()) {
-//
-//            return diNgang();
-//        } else return diDoc();
+
 
 
     }

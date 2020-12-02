@@ -1,6 +1,9 @@
 package bomber;
 
-import bomber.Item.*;
+import bomber.Item.HpPlayerItem;
+import bomber.Item.Item;
+import bomber.Item.SpeedItem;
+import bomber.StillObject.Gate;
 import bomber.StillObject.Tile;
 import bomber.entity.Enemy.Enemy;
 import bomber.entity.Enemy.Needle;
@@ -26,6 +29,21 @@ public class Game extends Canvas {
     public static final int HEIGHT = 12;
     public double mouseX = 0;
     public double mouseY = 0;
+    public MainMenu mainMenu = new MainMenu();
+
+    public MainMenu getMainMenu() {
+        return mainMenu;
+    }
+
+    //-------------------So luong Enemy dang trong map------------------
+    public int numOfEnemy = 0;
+
+    public int getNumOfEnemy() {
+        return numOfEnemy;
+    }
+
+    //-------------------------------End so luong enemy---------------------
+
     //-------------------BombLevel,BombNumber,Speed,HpPlayer, and function-------------------------------------
     private static double playerSpeed = 2;
     private static double bombLevel = 1;
@@ -48,13 +66,13 @@ public class Game extends Canvas {
     public static void HpUp(double Hp) {
         System.out.print(hpPlayer);
         hpPlayer += Hp;
-        System.out.println(" : -> HpUp successful : -> "+ hpPlayer);
+        System.out.println(" : -> HpUp successful : -> " + hpPlayer);
     }
 
     public static void bombNumberUp(double bombNumberUp) {
         System.out.print(bombNumberUp);
         bombNumber += bombNumberUp;
-        System.out.println(" : -> bombNumberUp successful : -> "+ bombNumberUp);
+        System.out.println(" : -> bombNumberUp successful : -> " + bombNumberUp);
     }
 //---------------------End item,speed,.....---------------------------------
 
@@ -98,6 +116,7 @@ public class Game extends Canvas {
         enemy.setXY(x, y);
         enemy.start();
         addEntity(enemy);
+        numOfEnemy++;
 
     }
 
@@ -122,7 +141,6 @@ public class Game extends Canvas {
 
     }
 
-
     public ArrayList<String> input = new ArrayList<>();
 
     public Map map;
@@ -145,7 +163,9 @@ public class Game extends Canvas {
         map.setEntityList(entities);
         map.loadMap(System.getProperty("user.dir") + "\\src\\level\\level" + level + ".txt");
         updateMap();
-
+        Gate gate = new Gate(this);
+        gate.setXY(this.WIDTH - 1, this.HEIGHT / 2 + 1);
+        entities.add(gate);
         me = new MapEditor();
         me.setMap(map);
         me.setGame(this);
@@ -189,7 +209,8 @@ public class Game extends Canvas {
         timer.start();
 
     }
-//    private static double playerSpeed = 2;
+
+    //    private static double playerSpeed = 2;
 //    private static double bombLevel = 1;
 //    private static double hpPlayer = 1;
 //    private static double bombNumber = 1;
@@ -211,6 +232,10 @@ public class Game extends Canvas {
                     //set bomb NUmber here
 
                     entities.remove(e);
+                }
+            } else if (e instanceof Gate) {
+                if(((Gate) e).collide(player)){
+                    System.out.println("Next level");
                 }
             } else {
                 e.update();
@@ -252,7 +277,7 @@ public class Game extends Canvas {
         entities.forEach(g -> g.render(gc));
     }
 
-    public boolean playAgain() {
+    public boolean isplayAgain() {
         for (Entity e : entities) {
             if (e instanceof Player) {
                 if (!e.getActive()) {

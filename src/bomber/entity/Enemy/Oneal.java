@@ -3,7 +3,7 @@ package bomber.entity.Enemy;
 
 import java.util.Random;
 
-public class Oneal extends Enemy{
+public class Oneal extends Enemy {
     public Oneal() {
         super("skullHead");
     }
@@ -12,12 +12,12 @@ public class Oneal extends Enemy{
     public void start() {
         this.health = 1;
         Random random = new Random();
-        this.setSpeed(random.nextInt(2)+1);
+        this.setSpeed(random.nextInt(2) + 1);
         canBePassed = true;
     }
 
     public void movement() {
-        enemyAI = new EnemyAI(player,this);
+        enemyAI = new EnemyAI(player, this);
         if (updateCounter > updateRate && !isMoving()) {
             switch (enemyAI.getDirection()) {
                 case WEST:
@@ -32,12 +32,14 @@ public class Oneal extends Enemy{
                 case NORTH:
                     toY--;
                     break;
-                default: break;
+                default:
+                    break;
             }
 
 
         }
     }
+
     @Override
     public void update() {
         updateCounter++;
