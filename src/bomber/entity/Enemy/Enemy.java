@@ -12,21 +12,22 @@ public abstract class Enemy extends Pawn {
     protected int updateCounter = 0;
     protected int damage = 1;
     protected double noiseRate = 8;
-    protected double rdmNoiseRate = noiseRate;
+    protected double rdmNoiseRate = Game.randomDouble(noiseRate * 0.75, noiseRate * 1.5f);
+    public int strengthPoint = 10;
     TimeCounter noiseIdleCounter = new TimeCounter();
     Player player;
-//------------AIbotCui-------------
-    protected EnemyAI enemyAI = new EnemyAI(player,this);
+    //------------AIbotCui-------------
+    protected EnemyAI enemyAI = new EnemyAI(player, this);
 
 
 //------------End AIbotCui----------
 
 
     public void enemyIdleNoise() {
-        Sound sound = new Sound();
+
         if(noiseIdleCounter.getTime() > rdmNoiseRate) {
-            sound.playSound(label+"Idle");
-            rdmNoiseRate = Game.randomDouble(noiseRate*0.75, noiseRate*1.5f);
+            Sound.playSound(label + "Idle");
+            rdmNoiseRate = Game.randomDouble(noiseRate * 0.75, noiseRate * 1.5f);
             noiseIdleCounter.resetCounter();
         }
     }

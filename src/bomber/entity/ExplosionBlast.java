@@ -40,7 +40,7 @@ public class ExplosionBlast extends Entity {
         this.destructible = false;
         this.setCanBePassed(true);
 
-        if (mapRef.dealDamageTile(x, y,1)) {
+        if (mapRef.dealDamageTile(x, y, 1)) {
             this.penetration--;
         }
         if (this.penetration < 1) {
@@ -53,13 +53,12 @@ public class ExplosionBlast extends Entity {
 
          */
         for (Entity e : mapRef.getEntityList()) {
-            if(e instanceof Player) {
-                if(e.isCollidedWith(this)) {
-                    Game.setHpPlayer(e.health-1);
+            if (e instanceof Player) {
+                if (e.isCollidedWith(this)) {
+                    Game.setHpPlayer(e.health - 1);
                     e.takeDamage(1);
                 }
-            }
-            else if (e.isCollidedWith(this)) {
+            } else if (e.isCollidedWith(this)) {
                 e.takeDamage(1);
 
             }

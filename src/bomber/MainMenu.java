@@ -21,7 +21,7 @@ import java.util.List;
 
 public class MainMenu extends Application {
 
-//    public static final int WIDTH = 16;
+    //    public static final int WIDTH = 16;
 //    public static final int HEIGHT = 9;
     public static final double fontSize = 36;
 
@@ -29,7 +29,7 @@ public class MainMenu extends Application {
     private GraphicsContext gc;
     private Game game;
     private Group root;
-    double x,y;
+    double x, y;
 
     public Game getGame() {
         return game;
@@ -38,7 +38,7 @@ public class MainMenu extends Application {
     @Override
     public void start(Stage stage) {
 
-        game = new Game(Texture.IMAGE_SIZE * Map.MAP_WIDTH, Texture.IMAGE_SIZE * (Map.MAP_HEIGHT + 2) );
+        game = new Game(Texture.IMAGE_SIZE * Map.MAP_WIDTH, Texture.IMAGE_SIZE * (Map.MAP_HEIGHT + 2));
         gc = game.getGraphicsContext2D();
 
         _level = 1;
@@ -78,7 +78,7 @@ public class MainMenu extends Application {
         startText.setOnMouseClicked(mouseEvent -> {
             root.getChildren().clear();
             root.getChildren().add(game);
-            game.start( _level);
+            game.start(_level);
         });
         levelText.setOnMouseClicked(mouseEvent -> {
             root.getChildren().clear();
@@ -94,7 +94,7 @@ public class MainMenu extends Application {
                 int finalI = i;
                 te.setOnMouseClicked(mouseEvent1 -> {
                     set_level(finalI + 1);
-                    for(Text c : texts) {
+                    for (Text c : texts) {
                         c.setFill(Color.BLACK);
                     }
                     te.setFill(Color.WHITESMOKE);
@@ -117,19 +117,20 @@ public class MainMenu extends Application {
 
         });
 //-------------------End event------------------------------------------
-        if(game.isplayAgain()) {
+        if (game.isPlayAgain()) {
             drawPlayAgain();
         }
     }
+
     public void drawPlayAgain() {
-        Rectangle rec = new Rectangle(5*Texture.IMAGE_SIZE,5*Texture.IMAGE_SIZE,
-                6*Texture.IMAGE_SIZE,3*Texture.IMAGE_SIZE);
+        Rectangle rec = new Rectangle(5 * Texture.IMAGE_SIZE, 5 * Texture.IMAGE_SIZE,
+                6 * Texture.IMAGE_SIZE, 3 * Texture.IMAGE_SIZE);
         rec.setFill(Color.LIGHTGRAY);
         root.getChildren().add(rec);
         Text playAgain = new Text("Play again");
-        playAgain.setX(5*Texture.IMAGE_SIZE + 10);
-        playAgain.setY(4*Texture.IMAGE_SIZE);
-        playAgain.setFont(new Font("Arial",20));
+        playAgain.setX(5 * Texture.IMAGE_SIZE + 10);
+        playAgain.setY(4 * Texture.IMAGE_SIZE);
+        playAgain.setFont(new Font("Arial", 20));
         root.getChildren().add(playAgain);
         playAgain.setOnMouseClicked(mouseEvent -> {
             playAgain();
@@ -147,6 +148,7 @@ public class MainMenu extends Application {
             e.printStackTrace();
         }
     }
+
     public void playAgain() {
         root.getChildren().clear();
         root.getChildren().add(game);
@@ -154,14 +156,14 @@ public class MainMenu extends Application {
 
     public void nextLevel() {
         System.out.println("next level");
-        if(_level < 2) _level++;
+        if (_level < 2) _level++;
         else {
             System.out.println("Het level roii");
             System.exit(0);
         }
         root.getChildren().clear();
         root.getChildren().add(game);
-        game.start( _level);
+        game.start(_level);
     }
 
     public void set_level(int _level) {

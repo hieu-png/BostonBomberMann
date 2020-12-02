@@ -1,10 +1,13 @@
 package bomber.gameFunction;
 
 import bomber.Game;
-import bomber.entity.Enemy.Balloon;
-import bomber.entity.Enemy.SkullHead;
-import bomber.entity.Entity;
+import bomber.Item.ItemBombNumberUp;
+import bomber.Item.ItemBombRange;
+import bomber.Item.ItemPlayerHealth;
+import bomber.Item.ItemSpeed;
 import bomber.StillObject.Tile;
+import bomber.entity.Enemy.Balloon;
+import bomber.entity.Entity;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -64,10 +67,9 @@ public class Map {
             }
         }
         for (Entity entity : entityList) {
-            if(!(entity instanceof Balloon))
-            mapInfo[(int) entity.getY()][(int) entity.getX()] = entity.getCanBePassed() ? 0 : 1;
+            if (!(entity instanceof Balloon))
+                mapInfo[(int) entity.getY()][(int) entity.getX()] = entity.getCanBePassed() ? 0 : 1;
         }
-
 
 
         return mapInfo;
@@ -132,10 +134,12 @@ public class Map {
         if (validTile(x, y)) {
             Tile tileRef = mapTile[y][x];
             if (tileRef.isDestructible()) {
-                if (tileRef.getFloorTile() != null)
+                if (tileRef.getFloorTile() != null) {
                     changeTile(x, y, tileRef.getFloorTile().getId());
-                else {
-                    //Them roi ra do o day
+                    spawnRandomLoot(x, y);
+
+                    //System.out.println("Normal demolish");
+                } else {
                 }
                 return true;
             } else
@@ -204,6 +208,21 @@ public class Map {
         tileId[9].setDestructible(false);
     }
 
+    private void spawnRandomLoot(int x, int y) {
+
+        int rdn = Game.randomInt(0, 50);
+       // System.out.println("spawned loot: " + rdn);
+        switch (rdn) {
+            case 0 -> getGame().addEntity(new ItemBombNumberUp(x, y));
+            case 1 -> getGame().addEntity(new ItemPlayerHealth(x, y));
+            case 2 -> getGame().addEntity(new ItemSpeed(x, y));
+            case 3 -> getGame().addEntity(new ItemBombRange(x, y));
+            default -> {
+            }
+
+        }
+    }
+
     public Tile getTile(int i, int j) {
         return mapTile[i][j];
     }
@@ -243,5 +262,6 @@ public class Map {
 
         }
     }
+
 
 }
