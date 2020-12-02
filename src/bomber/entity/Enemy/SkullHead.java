@@ -1,16 +1,21 @@
 package bomber.entity.Enemy;
 
-import bomber.Game;
 
-public class ThroughtWall extends Enemy{
-    public ThroughtWall() {
-        super("balloon");
+import java.util.Random;
+
+public class Oneal extends Enemy{
+    public Oneal() {
+        super("skullHead");
     }
+
+    @Override
     public void start() {
         this.health = 1;
-        this.setSpeed(1);
+        Random random = new Random();
+        this.setSpeed(random.nextInt(2)+1);
         canBePassed = true;
     }
+
     public void movement() {
         enemyAI = new EnemyAI(player,this);
         if (updateCounter > updateRate && !isMoving()) {
@@ -29,13 +34,9 @@ public class ThroughtWall extends Enemy{
                     break;
                 default: break;
             }
-        }
-    }
 
-    @Override
-    public boolean checkIfTileEmpty(double x, double y) {
-        if(x == Game.WIDTH-1 || y == Game.HEIGHT-1 || x ==0 || y == 0) return false;
-        return true;
+
+        }
     }
     @Override
     public void update() {
@@ -48,4 +49,5 @@ public class ThroughtWall extends Enemy{
         if (updateCounter > updateRate)
             updateCounter = 0;
     }
+
 }

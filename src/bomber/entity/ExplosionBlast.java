@@ -39,12 +39,19 @@ public class ExplosionBlast extends Entity {
         this.directionFacing = _facingDirection;
         this.destructible = false;
         this.setCanBePassed(true);
+
         if (mapRef.dealDamageTile(x, y,1)) {
             this.penetration--;
         }
         if (this.penetration < 1) {
             this.range = 0;
         }
+        /*
+        if (mapRef.dealDamageTile(x, y,1)) {
+            this.range = 0;
+        }
+
+         */
         for (Entity e : mapRef.getEntityList()) {
             if (e.isCollidedWith(this)) {
                 e.takeDamage(1);

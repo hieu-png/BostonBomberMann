@@ -5,7 +5,7 @@ import bomber.gameFunction.Texture;
 
 public abstract class Pawn extends Entity {
     protected String label;
-    protected Map map;
+    protected Map mapRef;
     protected double toX = x, toY = y;
     protected double speed = 2 / (double) Texture.IMAGE_SIZE;
     protected int[][] mapInfo;
@@ -16,9 +16,9 @@ public abstract class Pawn extends Entity {
         this.speed = speed / (double) Texture.IMAGE_SIZE;
     }
 
-    public void setMap(Map map) {
-        this.map = map;
-        mapInfo = map.createNavigationMap();
+    public void setMapRef(Map mapRef) {
+        this.mapRef = mapRef;
+        mapInfo = mapRef.createNavigationMap();
 
     }
 
@@ -35,7 +35,7 @@ public abstract class Pawn extends Entity {
         mapUpdateCounter++;
 
         if (mapUpdateCounter > mapUpdateRate) {
-            mapInfo = map.createNavigationMap();
+            mapInfo = mapRef.createNavigationMap();
             mapUpdateCounter = 0;
 
         }

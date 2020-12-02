@@ -7,8 +7,8 @@ import bomber.StillObject.Gate;
 import bomber.StillObject.Tile;
 import bomber.entity.Enemy.Enemy;
 import bomber.entity.Enemy.Needle;
-import bomber.entity.Enemy.Oneal;
-import bomber.entity.Enemy.ThroughtWall;
+import bomber.entity.Enemy.SkullHead;
+import bomber.entity.Enemy.Balloon;
 import bomber.entity.Entity;
 import bomber.entity.Player;
 import bomber.gameFunction.Map;
@@ -112,7 +112,7 @@ public class Game extends Canvas {
 
     public void addEnemy(Enemy enemy, int x, int y) {
 
-        enemy.setMap(map);
+        enemy.setMapRef(map);
         enemy.setXY(x, y);
         enemy.start();
         addEntity(enemy);
@@ -171,7 +171,7 @@ public class Game extends Canvas {
         me.setGame(this);
         //Player
         player = new Player();
-        player.setMap(map);
+        player.setMapRef(map);
         player.setXY(1, 1);
         player.setInput(input);
 
@@ -181,18 +181,18 @@ public class Game extends Canvas {
         b.setPlayer(player);
         addEnemy(b, 13, 12);
 
-        Oneal oneal = new Oneal();
+        SkullHead oneal = new SkullHead();
         oneal.setPlayer(player);
         addEnemy(oneal, 14, 12);
 
-        ThroughtWall throughtWall = new ThroughtWall();
+        Balloon throughtWall = new Balloon();
         throughtWall.setPlayer(player);
         addEnemy(throughtWall, 14, 12);
 //------------------------End Enemy--------------------------------------------------------------------
 
 //-----------------------Item-----------------------------------------------------------------------------------------
-        items.add(new HpPlayerItem(1, 2));
-        items.add(new SpeedItem(1, 3));
+        items.add(new ItemPlayerHealth(1, 2));
+        items.add(new ItemSpeed(1, 3));
         //items.add(new BombNumberUpItem(2, 1));
         //items.add(new BombLevelItem(3, 1));
 
@@ -248,18 +248,6 @@ public class Game extends Canvas {
         while (!removeStack.isEmpty()) {
             entities.remove(removeStack.pop());
         }
-
-        /*
-        Iterator<Entity> e = entities.iterator();
-        while (e.hasNext()) {
-            /*
-            if (e.isToDelete()) {
-                entities.remove(e);
-            } else {
-                e.update;
-            }
-
-    }*/
 
 
         me.update();

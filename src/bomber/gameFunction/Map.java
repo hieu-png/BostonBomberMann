@@ -1,6 +1,7 @@
 package bomber.gameFunction;
 
 import bomber.Game;
+import bomber.entity.Enemy.SkullHead;
 import bomber.entity.Entity;
 import bomber.StillObject.Tile;
 
@@ -62,6 +63,7 @@ public class Map {
             }
         }
         for (Entity entity : entityList) {
+            if(!(entity instanceof SkullHead))
             mapInfo[(int) entity.getY()][(int) entity.getX()] = entity.getCanBePassed() ? 0 : 1;
         }
         return mapInfo;

@@ -11,7 +11,7 @@ public abstract class Enemy extends Pawn {
     protected int updateRate = 8;
     protected int updateCounter = 0;
     protected int damage = 1;
-    protected double noiseRate = 5;
+    protected double noiseRate = 8;
     protected double rdmNoiseRate = noiseRate;
     TimeCounter noiseIdleCounter = new TimeCounter();
     Player player;
@@ -26,7 +26,7 @@ public abstract class Enemy extends Pawn {
         Sound sound = new Sound();
         if(noiseIdleCounter.getTime() > rdmNoiseRate) {
             sound.playSound(label+"Idle");
-            rdmNoiseRate = Game.randomDouble(noiseRate/2, noiseRate*1.5f);
+            rdmNoiseRate = Game.randomDouble(noiseRate*0.75, noiseRate*1.5f);
             noiseIdleCounter.resetCounter();
         }
     }
