@@ -1,5 +1,6 @@
 package bomber.gameFunction;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.*;
 import javafx.scene.image.Image;
 
@@ -29,6 +30,10 @@ public class Texture {
     }
 
     Color color;
+
+    public void render(GraphicsContext gc, int x, int y) {
+        gc.drawImage(image, x, y);
+    }
 
     public Image getImage() {
         return image;

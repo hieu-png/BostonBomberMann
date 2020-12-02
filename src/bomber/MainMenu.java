@@ -5,6 +5,7 @@ import bomber.gameFunction.Sound;
 import bomber.gameFunction.Texture;
 import javafx.application.Application;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -21,15 +22,23 @@ import java.util.List;
 
 public class MainMenu extends Application {
 
-//    public static final int WIDTH = 16;
-//    public static final int HEIGHT = 9;
-    protected final double fontSize = 36;
+
+    public static final double fontSize = 36;
 
     private int _level;
     private GraphicsContext gc;
     private Game game;
     private Group root;
     double x,y;
+
+    public Group getRoot() {
+        return root;
+    }
+
+    public void addToRoot(Node node) {
+        if(node != null)
+        root.getChildren().add(node);
+    }
 
     public Game getGame() {
         return game;
@@ -53,10 +62,13 @@ public class MainMenu extends Application {
         startText.setText("Play");
         startText.setFont(Font.font("Arial", fontSize));
         System.out.print(startText.getFont());
+
         startText.setX((x - fontSize * 3.2) / 2);
         startText.setY(y / 3);
         startText.setFill(Color.RED);
+
         root.getChildren().add(startText);
+
         Text levelText = new Text("Level");
         levelText.setFont(Font.font("Arial", fontSize));
         levelText.setX((x - fontSize * 3.2) / 2);

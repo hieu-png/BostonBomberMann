@@ -15,6 +15,11 @@ public class MapEditor {
     static final String pathToCustom = System.getProperty("user.dir") + "\\src\\level\\custom\\map.txt";
     private int selectedTile = 0;
     private boolean enabled = false;
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
     private Texture selectedTexture;
     //Custom cursor
     int toX = 0;

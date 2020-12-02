@@ -67,6 +67,9 @@ public class Map {
             if(!(entity instanceof Balloon))
             mapInfo[(int) entity.getY()][(int) entity.getX()] = entity.getCanBePassed() ? 0 : 1;
         }
+
+
+
         return mapInfo;
     }
 

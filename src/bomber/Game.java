@@ -11,6 +11,7 @@ import bomber.entity.Enemy.Needle;
 import bomber.entity.Enemy.SkullHead;
 import bomber.entity.Entity;
 import bomber.entity.Player;
+import bomber.gameFunction.InGameUI;
 import bomber.gameFunction.Map;
 import bomber.gameFunction.MapEditor;
 import bomber.gameFunction.Texture;
@@ -19,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -93,7 +95,7 @@ public class Game extends Canvas {
     }
 
     Scene scene;
-
+    InGameUI userInterface;
     public void setScene(Scene scene) {
         this.scene = scene;
     }
@@ -159,13 +161,11 @@ public class Game extends Canvas {
     Texture crackStage1;
     Texture crackStage2;
     Texture crackStage3;
-
     public void start(int level) {
         gc = this.getGraphicsContext2D();
         crackStage1 = new Texture(textureFolderPath + "crack1.png");
         crackStage2 = new Texture(textureFolderPath + "crack2.png");
         crackStage3 = new Texture(textureFolderPath + "crack3.png");
-
         map = new Map();
         map.setGame(this);
 
@@ -207,6 +207,8 @@ public class Game extends Canvas {
         //items.add(new BombLevelItem(3, 1));
 
         entities.addAll(items);
+         userInterface = new InGameUI();
+        userInterface.setUp(player, me, this);
 //----------------------End Item---------------------------------------------------------------------------------------
         AnimationTimer timer = new AnimationTimer() {
             @Override
@@ -262,6 +264,7 @@ public class Game extends Canvas {
             ((Tile) g).renderState(gc, crackStage1, crackStage2, crackStage3);
         });
         entities.forEach(g -> g.render(gc));
+        userInterface.render(gc);
     }
 
     public boolean isplayAgain() {

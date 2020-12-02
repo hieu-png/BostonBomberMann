@@ -18,8 +18,13 @@ public class Player extends Pawn {
     }
 
     static final int numberOfBombType = 4;
-    public int bombRangeBonus = 0;
+    public int bombRangeBonus = 4;
     private int selectedBomb = 0;
+
+    public int getSelectedBomb() {
+        return selectedBomb;
+    }
+
     public TimeCounter[] bombCountdownCounter;
     public double[] bombCoolDown;
 
@@ -69,6 +74,7 @@ public class Player extends Pawn {
 
     }
 
+    boolean moved = true;
 
     public void handleInput() {
         if (!isMoving()) {
@@ -87,10 +93,11 @@ public class Player extends Pawn {
                 toY++;
 
 
-            } else if(input.contains("V")){
+            } else if (input.contains("V")) {
                 System.out.println();
+            } else {
+
             }
-            else {}
             if (input.contains("SPACE")) {
                 //System.out.println("Speed : " + this.speed*(double) Texture.IMAGE_SIZE);
 
@@ -103,7 +110,7 @@ public class Player extends Pawn {
                 }
 
             }
-        }
+        } else moved = true;
 
         for (int i = 0; i < numberOfBombType; i++) {
             if (input.contains("DIGIT" + (i + 1))) {
@@ -125,17 +132,22 @@ public class Player extends Pawn {
         if (isThisBombReady(0)) {
             mapRef.getGame().addEntity(new Bomb(
                     x, y, 1 + bombRangeBonus,
-                    2, mapRef, 1,1,
+                    2, mapRef, 1, 1,
                     "explosionBomb", "placeGentle"));
+            moved = false;
+
         }
+
     }
 
     public void placeDynamite() {
         if (isThisBombReady(1)) {
             mapRef.getGame().addEntity(new Bomb(
                     x, y, 2 + 2 * bombRangeBonus,
-                    4, mapRef, 2,2,
+                    4, mapRef, 2, 2 + bombRangeBonus,
                     "explosionBig", "placeGentle"));
+            moved = false;
+
         }
     }
 
@@ -143,6 +155,8 @@ public class Player extends Pawn {
         if (isThisBombReady(2)) {
             mapRef.getGame().addEntity(new GasolineBarrel(x, y, 5 + bombRangeBonus,
                     mapRef, "explosionFlame", "placeGentle"));
+            moved = false;
+
         }
     }
 
@@ -150,6 +164,8 @@ public class Player extends Pawn {
         if (isThisBombReady(3)) {
             mapRef.getGame().addEntity(new ProximityMine(x, y, 1, mapRef,
                     "explosionBomb", "beepSmall"));
+            moved = false;
+
         }
     }
 
