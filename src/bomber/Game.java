@@ -106,7 +106,7 @@ public class Game extends Canvas {
         map.loadMap(System.getProperty("user.dir") + "\\src\\level\\level" + level + ".txt");
         updateMap();
         Gate gate = new Gate(this);
-        gate.setXY(WIDTH ,HEIGHT/2-1 );
+        gate.setXY(WIDTH, HEIGHT / 2 - 1);
         entities.add(gate);
         me = new MapEditor();
         me.setMap(map);
@@ -116,7 +116,7 @@ public class Game extends Canvas {
         player.setMapRef(map);
         player.setXY(1, 1);
         player.setInput(input);
-
+        player.setHealth(hpPlayer);
         entities.add(player);
 //-------------------------Enemy-----------------------
         Needle b = new Needle();
@@ -133,9 +133,9 @@ public class Game extends Canvas {
 //------------------------End Enemy--------------------------------------------------------------------
 
 //-----------------------Item-----------------------------------------------------------------------------------------
-        items.add(new ItemPlayerHealth(1, 2));
-        items.add(new ItemSpeed(1, 3));
-        items.add(new ItemBombRange(2, 1));
+        items.add(new ItemPlayerHealth(2, 1));
+        items.add(new ItemSpeed(6, 10));
+        items.add(new ItemBombRange(11, 4));
         items.add(new ItemBombNumberUp(3, 1));
 
         entities.addAll(items);
@@ -167,14 +167,15 @@ public class Game extends Canvas {
             } else if (e instanceof Item) {
                 if (((Item) e).collided(player)) {
                     e.destroy();
+
                     entities.remove(e);
                 }
             } else {
                 e.update();
             }
         }
-        if(gatePassed) {//----------------------------------------------------------------------------------
-            System.out.println("RAPISRAZUIRA");
+        if (gatePassed) {//----------------------------------------------------------------------------------
+            System.out.println("Next Level");
             newGame();
             mainMenu.nextLevel();
         }
@@ -335,4 +336,7 @@ public class Game extends Canvas {
         return entities;
     }
 
+    public static void setHpPlayer(int hpPlayer1){
+        hpPlayer = hpPlayer1;
+    }
 }

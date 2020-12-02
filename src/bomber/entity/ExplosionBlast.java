@@ -53,8 +53,15 @@ public class ExplosionBlast extends Entity {
 
          */
         for (Entity e : mapRef.getEntityList()) {
-            if (e.isCollidedWith(this)) {
+            if(e instanceof Player) {
+                if(e.isCollidedWith(this)) {
+                    Game.setHpPlayer(e.health-1);
+                    e.takeDamage(1);
+                }
+            }
+            else if (e.isCollidedWith(this)) {
                 e.takeDamage(1);
+
             }
             if (e instanceof Bomb && e.isCollidedWith(this)) {
                 ((Bomb) e).explode();
