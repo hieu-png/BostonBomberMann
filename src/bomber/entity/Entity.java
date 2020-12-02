@@ -1,7 +1,6 @@
 package bomber.entity;
 
 
-import bomber.gameFunction.Sound;
 import bomber.gameFunction.Texture;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -12,6 +11,7 @@ public abstract class Entity {
     protected double y = 0;
     protected boolean canBePassed = false;
     protected int health = 1;
+    protected int maxHealth = 1;
     protected boolean active = true;
     protected boolean destructible = true;
     protected boolean toDelete = false;
@@ -216,6 +216,7 @@ public abstract class Entity {
     }
 
     public void setHealth(int health) {
+        maxHealth = health;
         this.health = health;
     }
 

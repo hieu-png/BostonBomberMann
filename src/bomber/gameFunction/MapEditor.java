@@ -22,7 +22,7 @@ public class MapEditor {
     int x;
     int y;
     TimeCounter bombCounter = new TimeCounter();
-    double bombRate = 0.2;
+    double bombRate = 0.1;
     //int toX = x;
     //int toY = y;
 
@@ -74,7 +74,7 @@ public class MapEditor {
             if (toY >= map.MAP_HEIGHT) {
                 toY = map.MAP_HEIGHT - 1;
             }
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < Map.TILE_TYPE_LIMIT; i++) {
                 if (game.input.contains("DIGIT" + i)) {
                     selectedTile = i;
                 }
@@ -84,20 +84,37 @@ public class MapEditor {
             y = toY;
 
             if (game.input.contains("PRIMARY")) {
+                if (map.getTile(y, x).getId() != (selectedTile))
+                    Sound.playSound("placeCasual");
                 map.changeTile(x, y, selectedTile);
                 //game.updateMap();
             }
             if (game.input.contains("SECONDARY")) {
-                map.destroyTile(x, y);
+                if (map.destroyTile(x, y)) {
+                    Sound.playSound("destroyRough");
+                }
                 //game.updateMap();
             }
             if (game.input.contains("F10")) {
                 exportMap();
             }
             if (game.input.contains("Z")) {
-                if(bombCounter.getTime() > bombRate) {
-                game.addEntity(new Bomb(x, y, 2, 2, map, 1));
-                bombCounter.resetCounter();}
+                if (bombCounter.getTime() > bombRate) {
+                    game.addEntity(new Bomb(x, y, 1, 2, map, 1, 1, "explosionBomb"));
+                    bombCounter.resetCounter();
+                }
+            }
+            if (game.input.contains("X")) {
+                if (bombCounter.getTime() > bombRate) {
+                    game.addEntity(new Bomb(x, y, 5, 3, map, 2, 1, "explosionFlame"));
+                    bombCounter.resetCounter();
+                }
+            }
+            if (game.input.contains("C")) {
+                if (bombCounter.getTime() > bombRate) {
+                    game.addEntity(new Bomb(x, y, 30, 2, map, 5, 5, "explosionBig"));
+                    bombCounter.resetCounter();
+                }
             }
         }
     }

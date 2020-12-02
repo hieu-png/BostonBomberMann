@@ -1,5 +1,6 @@
 package bomber;
 
+import bomber.StillObject.Tile;
 import bomber.entity.*;
 import bomber.entity.Enemy.Enemy;
 import bomber.entity.Enemy.Needle;
@@ -8,6 +9,7 @@ import bomber.entity.Enemy.ThroughtWall;
 import bomber.gameFunction.Map;
 import bomber.gameFunction.MapEditor;
 
+import bomber.gameFunction.Texture;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -114,8 +116,15 @@ public class Game extends Canvas {
     public Map map;
     MapEditor me;
 
+    Texture crackStage1;
+    Texture crackStage2;
+    Texture crackStage3;
+
     public void start(int level) {
         gc = this.getGraphicsContext2D();
+        crackStage1 = new Texture(textureFolderPath+"crack1.png");
+        crackStage2 = new Texture(textureFolderPath+"crack2.png");
+        crackStage3 = new Texture(textureFolderPath+"crack3.png");
 
         map = new Map();
         map.setGame(this);
@@ -138,15 +147,15 @@ public class Game extends Canvas {
 //-------------------------Enemy-----------------------
         Needle b = new Needle();
         b.setPlayer(player);
-        addEnemy(b, 8, 6);
+        addEnemy(b, 13, 12);
 
         Oneal oneal = new Oneal();
         oneal.setPlayer(player);
-        addEnemy(oneal,8,6);
+        addEnemy(oneal,14,12);
 
         ThroughtWall throughtWall = new ThroughtWall();
         throughtWall.setPlayer(player);
-        addEnemy(throughtWall,8,6);
+        addEnemy(throughtWall,14,12);
 //------------------------End Enemy------------------------
         AnimationTimer timer = new AnimationTimer() {
             @Override
@@ -193,13 +202,15 @@ public class Game extends Canvas {
 
 
         me.update();
+
         updateMap();
 
     }
 
     public void render() {
         gc.clearRect(0, 0, this.getWidth(), this.getHeight());
-        stillObjects.forEach(g -> g.render(gc));
+        stillObjects.forEach(g -> {g.render(gc);
+            ((Tile) g).renderState(gc,crackStage1, crackStage2,crackStage3); });
         entities.forEach(g -> g.render(gc));
     }
 

@@ -49,12 +49,12 @@ public class Sound  {
         playSound("MetalHit-resources.assets-3447");
     }
 
-    public static void enemyDead1() {
-        playSound("Pawn_Megascarab_Wounded_1c-resources.assets-3996");
-    }
+   // public static void enemyDead1() {
+    //    playSound("Pawn_Megascarab_Wounded_1c-resources.assets-3996");
+    //}
 
     public static void ThemeSound() {
-        loopSound("ScannerLongRangeMineral_Ambience_Loop-resources.assets-2554");
+        loopSound("burningMemory");
     }
 
 }
