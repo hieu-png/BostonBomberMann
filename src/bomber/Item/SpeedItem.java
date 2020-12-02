@@ -9,14 +9,14 @@ import bomber.gameFunction.Sound;
 public class SpeedItem extends Item {
     private boolean isCollected = false;
     public SpeedItem(int x,int y) {
-        super(System.getProperty("user.dir") + "\\src\\texture\\flameNorth.png",x,y);
+        super(Game.textureFolderPath + "flameNorth.png",x,y);
     }
 
     public boolean collided(Entity other) {
         if(other instanceof Player) {
             if(!isCollected && this.isCollidedWith(other)) {
                 Sound.getItem();
-                Game.speedUp(6);
+                Game.speedUp(1);
                 destroy();
                 isCollected = true;
             }

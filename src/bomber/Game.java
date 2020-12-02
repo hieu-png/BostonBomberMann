@@ -94,7 +94,7 @@ public class Game extends Canvas {
 
     public void addEnemy(Enemy enemy, int x, int y) {
 
-        enemy.setMap(map);
+        enemy.setMapRef(map);
         enemy.setXY(x, y);
         enemy.start();
         addEntity(enemy);
@@ -151,7 +151,7 @@ public class Game extends Canvas {
         me.setGame(this);
         //Player
         player = new Player();
-        player.setMap(map);
+        player.setMapRef(map);
         player.setXY(1, 1);
         player.setInput(input);
 
@@ -223,18 +223,6 @@ public class Game extends Canvas {
         while (!removeStack.isEmpty()) {
             entities.remove(removeStack.pop());
         }
-
-        /*
-        Iterator<Entity> e = entities.iterator();
-        while (e.hasNext()) {
-            /*
-            if (e.isToDelete()) {
-                entities.remove(e);
-            } else {
-                e.update;
-            }
-
-    }*/
 
 
         me.update();
