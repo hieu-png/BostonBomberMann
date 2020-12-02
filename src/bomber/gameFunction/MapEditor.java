@@ -74,7 +74,7 @@ public class MapEditor {
             if (toY >= map.MAP_HEIGHT) {
                 toY = map.MAP_HEIGHT - 1;
             }
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < Map.TILE_TYPE_LIMIT; i++) {
                 if (game.input.contains("DIGIT" + i)) {
                     selectedTile = i;
                 }
@@ -91,7 +91,7 @@ public class MapEditor {
             }
             if (game.input.contains("SECONDARY")) {
                 if (map.destroyTile(x, y)) {
-                Sound.playSound("destroyRough");
+                    Sound.playSound("destroyRough");
                 }
                 //game.updateMap();
             }
@@ -100,17 +100,22 @@ public class MapEditor {
             }
             if (game.input.contains("Z")) {
                 if (bombCounter.getTime() > bombRate) {
-                    game.addEntity(new Bomb(x, y, 1, 2, map, 1));
+                    game.addEntity(new Bomb(x, y, 1, 2, map, 1, 1, "explosionBomb"));
                     bombCounter.resetCounter();
                 }
             }
             if (game.input.contains("X")) {
                 if (bombCounter.getTime() > bombRate) {
-                    game.addEntity(new Bomb(x, y, 30, 3, map, 2));
+                    game.addEntity(new Bomb(x, y, 5, 3, map, 2, 1, "explosionFlame"));
                     bombCounter.resetCounter();
                 }
             }
-
+            if (game.input.contains("C")) {
+                if (bombCounter.getTime() > bombRate) {
+                    game.addEntity(new Bomb(x, y, 30, 2, map, 5, 5, "explosionBig"));
+                    bombCounter.resetCounter();
+                }
+            }
         }
     }
 

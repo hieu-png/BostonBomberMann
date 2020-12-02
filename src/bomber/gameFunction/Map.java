@@ -86,24 +86,40 @@ public class Map {
 
 
     public boolean isTileEmpty(double x, double y) {
-       // System.out.println((int) x + " " + (int) y +
-              //   (mapTile[(int) y][(int) x].getCanBePassed() ? "true" : "false"));
+        // System.out.println((int) x + " " + (int) y +
+        //   (mapTile[(int) y][(int) x].getCanBePassed() ? "true" : "false"));
         return isTileEmpty((int) x, (int) y);
     }
 
     public boolean isTileDestructible(int x, int y) {
-        if(validTile(x,y)) {
+        if (validTile(x, y)) {
             return mapTile[y][x].isDestructible();
         }
         return false;
     }
 
     public boolean isTileDestructible(double x, double y) {
-        return isTileDestructible((int)x,(int)y);
+        return isTileDestructible((int) x, (int) y);
     }
 
     public boolean destroyTile(double x, double y) {
         return destroyTile((int) x, (int) y);
+    }
+
+    public boolean dealDamageTile(double x, double y, int damage) {
+        return dealDamageTile((int) x, (int) y, damage);
+    }
+
+    public boolean dealDamageTile(int x, int y, int damage) {
+        if (validTile(x, y)) {
+            Tile tileRef = mapTile[y][x];
+            if (tileRef.takeDamage(damage)) {
+                if (tileRef.getHealth() <= 0)
+                    destroyTile(x, y);
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean destroyTile(int x, int y) {
@@ -116,9 +132,8 @@ public class Map {
                     //Them roi ra do o day
                 }
                 return true;
-            }
-            else
-            return  false;
+            } else
+                return false;
         }
         return false;
     }
@@ -150,25 +165,34 @@ public class Map {
         tileId[3].setDestructible(true);
         tileId[3].setFloorTile(new Tile(tileId[2], false));
 
-        //Cracked sandstone wall, destroyed after 1 explosion, become sandstone floor
+        //Cracked sandstone wall, destroyed after 2 explosion, become sandstone floor
         tileId[4].setCanBePassed(false);
         tileId[4].setDestructible(true);
+        tileId[4].setHealth(2);
         tileId[4].setFloorTile(new Tile(tileId[2], false));
 
-        //Sandstone brick wall, destroyed after 1 explosion, become cracked sandstone wall
+        //Sandstone brick wall, destroyed after 3 explosion, become sandstone floor
         tileId[5].setCanBePassed(false);
         tileId[5].setDestructible(true);
-        tileId[5].setFloorTile(new Tile(tileId[4], false));
+        tileId[5].setHealth(3);
+        tileId[5].setFloorTile(new Tile(tileId[2], false));
 
         //Gate floor
         tileId[6].setCanBePassed(true);
         tileId[6].setDestructible(false);
         //Gate
         tileId[7].setCanBePassed(false);
-        tileId[7].setDestructible(false);
+        tileId[7].setDestructible(true);
+        tileId[7].setHealth(5);
+        tileId[7].setFloorTile(new Tile(tileId[6], false));
+
         //Gas vent
         tileId[8].setCanBePassed(false);
-        tileId[8].setDestructible(false);
+        tileId[8].setDestructible(true);
+        tileId[8].setHealth(15);
+
+        tileId[8].setFloorTile(new Tile(tileId[6], false));
+
         //plasteel embrasure
         tileId[9].setCanBePassed(false);
         tileId[9].setDestructible(false);

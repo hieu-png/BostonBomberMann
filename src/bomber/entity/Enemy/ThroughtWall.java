@@ -2,8 +2,6 @@ package bomber.entity.Enemy;
 
 import bomber.Game;
 
-import java.util.Random;
-
 public class ThroughtWall extends Enemy{
     public ThroughtWall() {
         super("balloon");

@@ -8,11 +8,13 @@ import bomber.gameFunction.TimeCounter;
 public class ExplosionBlast extends Entity {
     Map mapRef;
     int range = 2;
-
+    int penetration = 1;
     public double delayDuration = 0;
     private TimeCounter delayCounter;
     boolean delaying = true;
-    public double lingerDuration = 0.15 + delayDuration;
+    public double lingerDuration = 0.1;
+    double delayOffset = 0.02;
+
     private TimeCounter lingerDurationCounter;
 
     public ExplosionBlast() {
@@ -20,7 +22,7 @@ public class ExplosionBlast extends Entity {
     }
 
     public ExplosionBlast(double x, double y, int range, Map map,
-                          facingDirection _facingDirection, double explosionDelay) {
+                          facingDirection _facingDirection, double explosionDelay, int penetration) {
         super(Game.textureFolderPath + "flameNorth.png",
                 Game.textureFolderPath + "flameEast.png",
                 Game.textureFolderPath + "flameSouth.png",
@@ -31,16 +33,24 @@ public class ExplosionBlast extends Entity {
         this.y = y;
         this.range = range;
         this.mapRef = map;
+        this.penetration = penetration;
         delayDuration = explosionDelay;
+        lingerDuration += this.delayDuration * this.range * 0.25;
         this.directionFacing = _facingDirection;
         this.destructible = false;
         this.setCanBePassed(true);
-        if (mapRef.destroyTile(x, y)) {
+        if (mapRef.dealDamageTile(x, y,1)) {
+            this.penetration--;
+        }
+        if (this.penetration < 1) {
             this.range = 0;
         }
         for (Entity e : mapRef.getEntityList()) {
             if (e.isCollidedWith(this)) {
                 e.takeDamage(1);
+            }
+            if (e instanceof Bomb && e.isCollidedWith(this)) {
+                ((Bomb) e).explode();
             }
         }
         mapRef.getGame().addEntity(this);
@@ -49,42 +59,41 @@ public class ExplosionBlast extends Entity {
 
 
     public void traverse(facingDirection fd) {
-        double delayOffset = 0.04;
         switch (fd) {
             case ALL -> {
                 traverse(facingDirection.NORTH);
                 traverse(facingDirection.SOUTH);
-
                 traverse(facingDirection.EAST);
                 traverse(facingDirection.WEST);
             }
             case SOUTH -> {
-                if (mapRef.isTileDestructible(x, y + 1) || mapRef.isTileEmpty(x, y + 1)) {
-                    mapRef.getGame().addEntity(
-                            new ExplosionBlast(x, y + 1, range - 1, mapRef, fd, delayDuration + delayOffset));
-                }
+                newFlameAt(0, 1, fd);
+
             }
             case NORTH -> {
-                if (mapRef.isTileDestructible(x, y - 1) || mapRef.isTileEmpty(x, y - 1)) {
-                    mapRef.getGame().addEntity(
-                            new ExplosionBlast(x, y - 1, range - 1, mapRef, fd, delayDuration + delayOffset));
-                }
+                newFlameAt(0, -1, fd);
+
             }
             case WEST -> {
-                if (mapRef.isTileDestructible(x - 1, y) || mapRef.isTileEmpty(x - 1, y)) {
-                    mapRef.getGame().addEntity(
-                            new ExplosionBlast(x - 1, y, range - 1, mapRef, fd, delayDuration + delayOffset));
-                }
+                newFlameAt(-1, 0, fd);
+
             }
             case EAST -> {
-                if (mapRef.isTileDestructible(x + 1, y) || mapRef.isTileEmpty(x + 1, y)) {
-                    mapRef.getGame().addEntity(
-                            new ExplosionBlast(x + 1, y, range - 1, mapRef, fd, delayDuration + delayOffset));
-                }
+                newFlameAt(1, 0, fd);
             }
             case STATIONARY -> {
 
             }
+        }
+    }
+
+    public void newFlameAt(double xOffset, double yOffset, facingDirection fd) {
+        if (mapRef.isTileDestructible(x + xOffset, y + yOffset)
+                || mapRef.isTileEmpty(x + xOffset, y + yOffset)) {
+            mapRef.getGame().addEntity(
+                    new ExplosionBlast(x + xOffset, y + yOffset,
+                            range - 1, mapRef, fd,
+                            delayDuration + delayOffset, penetration));
         }
     }
 

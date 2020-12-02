@@ -49,6 +49,7 @@ public class Player extends Pawn {
                 System.getProperty("user.dir") + "\\src\\texture\\" + "player" + "South.png");
         this.label = "player";
         canBePassed = true;
+        this.setSpeed(2);
     }
 
     public void createNormalBomb(){
