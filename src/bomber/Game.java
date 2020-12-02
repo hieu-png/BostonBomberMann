@@ -1,22 +1,24 @@
 package bomber;
 
+import bomber.Item.*;
 import bomber.StillObject.Tile;
-import bomber.entity.*;
 import bomber.entity.Enemy.Enemy;
 import bomber.entity.Enemy.Needle;
 import bomber.entity.Enemy.Oneal;
 import bomber.entity.Enemy.ThroughtWall;
+import bomber.entity.Entity;
+import bomber.entity.Player;
 import bomber.gameFunction.Map;
 import bomber.gameFunction.MapEditor;
-
 import bomber.gameFunction.Texture;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 public class Game extends Canvas {
     public static final String textureFolderPath = System.getProperty("user.dir") + "\\src\\texture\\";
@@ -27,23 +29,32 @@ public class Game extends Canvas {
     //-------------------BombLevel,BombNumber,Speed,HpPlayer, and function-------------------------------------
     private static double playerSpeed = 2;
     private static double bombLevel = 1;
-    private static double hpPlayer = 1;
+    private static int hpPlayer = 1;
     private static double bombNumber = 1;
 
     public static void speedUp(double speed) {
+        System.out.print(playerSpeed);
         playerSpeed += speed;
+        System.out.println(" : -> Speed up successful : -> " + playerSpeed);
     }
 
     public static void bombLevelUp(double bomblevel) {
+        System.out.print(playerSpeed);
         bombLevel += bomblevel;
+        System.out.println(" : -> bombLevelUp successful : -> " + bomblevel);
+
     }
 
     public static void HpUp(double Hp) {
+        System.out.print(hpPlayer);
         hpPlayer += Hp;
+        System.out.println(" : -> HpUp successful : -> "+ hpPlayer);
     }
 
     public static void bombNumberUp(double bombNumberUp) {
+        System.out.print(bombNumberUp);
         bombNumber += bombNumberUp;
+        System.out.println(" : -> bombNumberUp successful : -> "+ bombNumberUp);
     }
 //---------------------End item,speed,.....---------------------------------
 
@@ -74,6 +85,7 @@ public class Game extends Canvas {
 
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
 
     private List<Entity> getEntitiesList() {
         return entities;
@@ -122,9 +134,9 @@ public class Game extends Canvas {
 
     public void start(int level) {
         gc = this.getGraphicsContext2D();
-        crackStage1 = new Texture(textureFolderPath+"crack1.png");
-        crackStage2 = new Texture(textureFolderPath+"crack2.png");
-        crackStage3 = new Texture(textureFolderPath+"crack3.png");
+        crackStage1 = new Texture(textureFolderPath + "crack1.png");
+        crackStage2 = new Texture(textureFolderPath + "crack2.png");
+        crackStage3 = new Texture(textureFolderPath + "crack3.png");
 
         map = new Map();
         map.setGame(this);
@@ -151,12 +163,21 @@ public class Game extends Canvas {
 
         Oneal oneal = new Oneal();
         oneal.setPlayer(player);
-        addEnemy(oneal,14,12);
+        addEnemy(oneal, 14, 12);
 
         ThroughtWall throughtWall = new ThroughtWall();
         throughtWall.setPlayer(player);
-        addEnemy(throughtWall,14,12);
-//------------------------End Enemy------------------------
+        addEnemy(throughtWall, 14, 12);
+//------------------------End Enemy--------------------------------------------------------------------
+
+//-----------------------Item-----------------------------------------------------------------------------------------
+        items.add(new HpPlayerItem(1, 2));
+        items.add(new SpeedItem(1, 3));
+        //items.add(new BombNumberUpItem(2, 1));
+        //items.add(new BombLevelItem(3, 1));
+
+        entities.addAll(items);
+//----------------------End Item---------------------------------------------------------------------------------------
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -168,7 +189,10 @@ public class Game extends Canvas {
         timer.start();
 
     }
-
+//    private static double playerSpeed = 2;
+//    private static double bombLevel = 1;
+//    private static double hpPlayer = 1;
+//    private static double bombNumber = 1;
     public void update() {
         getInput();
         //can not remove or add while in the middle of iterating through list, have to use this;
@@ -176,6 +200,19 @@ public class Game extends Canvas {
         for (Entity e : entities) {
             if (e.isToDelete()) {
                 removeEntity(e);
+            } else if (e instanceof Item) {
+                if (((Item) e).collided(player)) {
+
+                    e.destroy();
+                    player.setHealth(hpPlayer);
+                    player.setSpeed(playerSpeed);
+
+                    //set bomb range here
+
+                    //set bomb NUmber here
+
+                    entities.remove(e);
+                }
             } else {
                 e.update();
             }
@@ -184,7 +221,7 @@ public class Game extends Canvas {
         while (!addStack.isEmpty()) {
             entities.add(addStack.pop());
         }
-        while(!removeStack.isEmpty()) {
+        while (!removeStack.isEmpty()) {
             entities.remove(removeStack.pop());
         }
 
@@ -209,8 +246,10 @@ public class Game extends Canvas {
 
     public void render() {
         gc.clearRect(0, 0, this.getWidth(), this.getHeight());
-        stillObjects.forEach(g -> {g.render(gc);
-            ((Tile) g).renderState(gc,crackStage1, crackStage2,crackStage3); });
+        stillObjects.forEach(g -> {
+            g.render(gc);
+            ((Tile) g).renderState(gc, crackStage1, crackStage2, crackStage3);
+        });
         entities.forEach(g -> g.render(gc));
     }
 

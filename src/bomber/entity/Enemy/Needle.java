@@ -2,6 +2,8 @@ package bomber.entity.Enemy;
 
 import bomber.Game;
 
+import java.util.Random;
+
 public class Needle extends Enemy {
 
 
@@ -12,7 +14,10 @@ public class Needle extends Enemy {
     @Override
     public void start() {
         this.health = 1;
-        this.setSpeed(1);
+
+        Random random = new Random();
+        this.setSpeed(random.nextInt(2)+1);
+        //this.setSpeed(1);
         canBePassed = true;
     }
 

@@ -8,16 +8,16 @@ import bomber.gameFunction.Sound;
 
 public class HpPlayerItem extends Item {
     private boolean isCollected = false;
-    public HpPlayerItem(String pathOfImage) {
-        super(pathOfImage);
+    public HpPlayerItem(int x,int y) {
+        super(System.getProperty("user.dir") + "\\src\\texture\\flameAll.png",x,y);
     }
 
-    @Override
-    public boolean isCollidedWith(Entity other) {
+    public boolean collided(Entity other) {
         if(other instanceof Player) {
-            if(!isCollected) {
+            if(!isCollected && this.isCollidedWith(other)) {
                 Sound.getItem();
                 Game.HpUp(1);
+                destroy();
                 isCollected = true;
             }
         }

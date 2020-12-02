@@ -7,7 +7,7 @@ public abstract class Pawn extends Entity {
     protected String label;
     protected Map map;
     protected double toX = x, toY = y;
-    private double speed = 2 / (double) Texture.IMAGE_SIZE;
+    protected double speed = 2 / (double) Texture.IMAGE_SIZE;
     protected int[][] mapInfo;
     protected int mapUpdateRate = 5;
     protected int mapUpdateCounter = 0;

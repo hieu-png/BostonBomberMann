@@ -8,16 +8,17 @@ import bomber.gameFunction.Sound;
 
 public class BombLevelItem extends Item {
     private boolean isCollected = false;
-    public BombLevelItem(String pathOfImage) {
-        super(pathOfImage);
+    public BombLevelItem(int x,int y) {
+        super(System.getProperty("user.dir") + "\\src\\texture\\flameEast.png",x,y);
+
     }
 
-    @Override
-    public boolean isCollidedWith(Entity other) {
+    public boolean collided(Entity other) {
         if(other instanceof Player) {
-            if(!isCollected) {
+            if(!isCollected && this.isCollidedWith(other)) {
                 Sound.getItem();
                 Game.bombLevelUp(1);
+                destroy();
                 isCollected = true;
             }
         }

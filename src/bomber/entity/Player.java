@@ -2,6 +2,7 @@ package bomber.entity;
 
 import bomber.entity.Enemy.Enemy;
 import bomber.gameFunction.Sound;
+import bomber.gameFunction.Texture;
 import bomber.gameFunction.TimeCounter;
 
 import java.util.ArrayList;
@@ -88,7 +89,7 @@ public class Player extends Pawn {
             }
         }
         if(input.contains("SPACE")) {
-
+            System.out.println("Speed : " + this.speed*(double) Texture.IMAGE_SIZE);
         }
 
     }

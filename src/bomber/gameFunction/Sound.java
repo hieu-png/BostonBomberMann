@@ -8,9 +8,10 @@ import java.io.File;
 public class Sound  {
 
     public static void playSound(String fileName) {
-        String path = (System.getProperty("user.dir") + "\\src\\sound\\" + fileName + ".wav");
+
 
         try {
+            String path = (System.getProperty("user.dir") + "\\src\\sound\\" + fileName + ".wav");
             File file = new File(path);
             Clip clip = AudioSystem.getClip();
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(file);
@@ -37,16 +38,16 @@ public class Sound  {
             e.printStackTrace();
         }
     }
-    public static void no(){//nổ
-        playSound("Mortar_Explode_Incendiary_1a-resources.assets-3848");
-    }
+//    public static void no(){//nổ
+//        playSound("Mortar_Explode_Incendiary_1a-resources.assets-3848");
+//    }
 
     public static void playerDead() {
         playSound("Spawn-resources.assets-2428");
     }
 
     public static void getItem() {
-        playSound("MetalHit-resources.assets-3447");
+        playSound("beepSmall");
     }
 
    // public static void enemyDead1() {

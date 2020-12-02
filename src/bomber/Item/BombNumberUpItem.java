@@ -8,16 +8,17 @@ import bomber.gameFunction.Sound;
 
 public class BombNumberUpItem extends Item {
     private boolean isCollected = false;
-    public BombNumberUpItem(String pathOfImage) {
-        super(pathOfImage);
+
+    public BombNumberUpItem(int x,int y) {
+        super(System.getProperty("user.dir") + "\\src\\texture\\flameSouth.png",x,y);
     }
 
-    @Override
-    public boolean isCollidedWith(Entity other) {
+    public boolean collided(Entity other) {
         if(other instanceof Player) {
-            if(!isCollected) {
+            if(!isCollected && this.isCollidedWith(other)) {
                 Sound.getItem();
                 Game.bombNumberUp(1);
+                destroy();
                 isCollected = true;
             }
         }
