@@ -29,9 +29,11 @@ public class Game extends Canvas {
     public static final int HEIGHT = 12;
     public double mouseX = 0;
     public double mouseY = 0;
+    MainMenu mainMenu;
 
-
-
+    public void setMainMenu(MainMenu mainMenu) {
+        this.mainMenu = mainMenu;
+    }
     //-------------------So luong Enemy dang trong map------------------
     public int numOfEnemy = 0;
 
@@ -56,9 +58,9 @@ public class Game extends Canvas {
 
     //-------------------BombLevel,BombNumber,Speed,HpPlayer, and function-------------------------------------
     private static double playerSpeed = 2;
-    private static double bombLevel = 1;
+    private static int bombLevel = 0;
     private static int hpPlayer = 1;
-    private static double bombNumber = 1;
+    private static double bombNumber = 0;
     public static void speedUp(double speed) {
         System.out.print(playerSpeed);
         playerSpeed += speed;
@@ -219,6 +221,8 @@ public class Game extends Canvas {
         //can not remove or add while in the middle of iterating through list, have to use this;
         player.setHealth(hpPlayer);
         player.setSpeed(playerSpeed);
+        player.setBombRangeBonus(bombLevel);
+        player.setBombCoolDown(bombNumber);
         for (Entity e : entities) {
             if (e.isToDelete()) {
                 removeEntity(e);
@@ -233,7 +237,8 @@ public class Game extends Canvas {
         }
         if(gatePassed) {//----------------------------------------------------------------------------------
             System.out.println("RAPISRAZUIRA");
-            playGame(2);
+            newGame();
+            mainMenu.nextLevel();
         }
         while (!addStack.isEmpty()) {
             entities.add(addStack.pop());
@@ -301,9 +306,9 @@ public class Game extends Canvas {
             input.remove(code);
         });
     }
-    public void playGame(int level1) {
-        gc.clearRect(0,0,this.getWidth(),this.getHeight());
-        if(!this.entities.isEmpty()) {
+    public void newGame() {
+        gc.clearRect(0, 0, this.getWidth(), this.getHeight());
+        if (!this.entities.isEmpty()) {
             this.entities.clear();
         }
         stillObjects.clear();
@@ -313,12 +318,5 @@ public class Game extends Canvas {
         bombNumber = 1;
         numOfEnemy = 0;
         player = null;
-        if(!this.items.isEmpty()) this.items.clear();
-        if(level1 <= 2) {
-            this.start(level1);
-        } else {
-            System.out.println("Het Level roi");
-            System.exit(0);
-        }
     }
 }

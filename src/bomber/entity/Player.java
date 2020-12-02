@@ -3,6 +3,7 @@ package bomber.entity;
 import bomber.Game;
 import bomber.entity.Enemy.Enemy;
 import bomber.gameFunction.Sound;
+import bomber.gameFunction.Texture;
 import bomber.gameFunction.TimeCounter;
 
 import java.util.ArrayList;
@@ -37,6 +38,16 @@ public class Player extends Pawn {
                     Sound.playerDead();
                 }
             }
+        }
+    }
+
+    public void setBombRangeBonus(int bombRangeBonus) {
+        this.bombRangeBonus = bombRangeBonus;
+    }
+
+    public void setBombCoolDown(double bombCoolDown) {
+        for (double v : this.bombCoolDown) {
+            if (v - bombCoolDown > 0) v -= bombCoolDown;
         }
     }
 
@@ -94,7 +105,7 @@ public class Player extends Pawn {
 
 
             } else if (input.contains("V")) {
-                System.out.println();
+                System.out.println("HP : " + health + " Bombankinh : " + bombRangeBonus + " speed : " + speed * (double) Texture.IMAGE_SIZE);
             } else {
 
             }

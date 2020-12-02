@@ -23,7 +23,7 @@ public class MainMenu extends Application {
 
 //    public static final int WIDTH = 16;
 //    public static final int HEIGHT = 9;
-    protected final double fontSize = 36;
+    public static final double fontSize = 36;
 
     private int _level;
     private GraphicsContext gc;
@@ -46,7 +46,7 @@ public class MainMenu extends Application {
         x = game.getWidth();
         y = game.getHeight();
         setBackGround();
-
+        game.setMainMenu(this);
 
 //----------------------render Function---------------------------------
         Text startText = new Text();
@@ -155,9 +155,11 @@ public class MainMenu extends Application {
     public void nextLevel() {
         System.out.println("next level");
         if(_level < 2) _level++;
-
+        else {
+            System.out.println("Het level roii");
+            System.exit(0);
+        }
         root.getChildren().clear();
-        set_level(_level);
         root.getChildren().add(game);
         game.start( _level);
     }
