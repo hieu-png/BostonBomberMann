@@ -79,11 +79,13 @@ public class MainMenu extends Application {
         stage.show();
 //--------------------Event--------------------------------------------
         startText.setOnMouseClicked(mouseEvent -> {
+            startText.setFill(Color.WHITESMOKE);
             root.getChildren().clear();
             root.getChildren().add(game);
             game.start(_level);
         });
         levelText.setOnMouseClicked(mouseEvent -> {
+            levelText.setFill(Color.WHITESMOKE);
             root.getChildren().clear();
             setBackGround();
             int levels = 2;
@@ -111,9 +113,11 @@ public class MainMenu extends Application {
             back.setY(game.getHeight() - 30);
             root.getChildren().add(back);
             back.setOnMouseClicked(mouseEvent1 -> {
+                back.setFill(Color.WHITESMOKE);
                 root.getChildren().clear();
                 setBackGround();
                 root.getChildren().add(levelText);
+                levelText.setFill(Color.RED);
                 root.getChildren().add(startText);
 
             });
@@ -142,6 +146,7 @@ public class MainMenu extends Application {
             @Override
             public void handle(KeyEvent e) {
                 if(e.getCode().equals(KeyCode.ENTER)) {
+                    playAgain.setFill(Color.WHITESMOKE);
                     System.out.println("Da nhan su kien");
                     root.getChildren().clear();
                     root.getChildren().add(game);
@@ -153,6 +158,7 @@ public class MainMenu extends Application {
 
         });
         playAgain.setOnMouseClicked(mouseEvent -> {
+            playAgain.setFill(Color.WHITESMOKE);
             System.out.println("Da nhan su kien");
             root.getChildren().clear();
             root.getChildren().add(game);

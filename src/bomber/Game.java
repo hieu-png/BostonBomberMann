@@ -40,7 +40,7 @@ public class Game extends Canvas {
     private static double playerSpeed = 2;
     private static int bombLevel = 0;
     private static int hpPlayer = 1;
-    private static double bombNumber = 0;
+    private static double bombCoolDown = 0;
 
 
     public int getNumOfEnemy() {
@@ -214,7 +214,7 @@ public class Game extends Canvas {
         player.setHealth(hpPlayer);
         player.setSpeed(playerSpeed);
         player.setBombRangeBonus(bombLevel);
-        player.setBombCoolDown(bombNumber);
+        player.setBombCoolDown(bombCoolDown);
         for (Entity e : entities) {
             if (e.isToDelete()) {
                 removeEntity(e);
@@ -310,9 +310,9 @@ public class Game extends Canvas {
         }
         stillObjects.clear();
         playerSpeed = 2;
-        bombLevel = 1;
+        bombLevel = 0;
         hpPlayer = 1;
-        bombNumber = 1;
+        bombCoolDown = 0;
         numOfEnemy = 0;
         player = null;
     }
@@ -371,7 +371,7 @@ public class Game extends Canvas {
     }
 
     public static void bombLevelUp(double bomblevel) {
-        System.out.print(playerSpeed);
+        System.out.print(bomblevel);
         bombLevel += bomblevel;
         System.out.println(" : -> bombLevelUp successful : -> " + bomblevel);
 
@@ -383,11 +383,10 @@ public class Game extends Canvas {
         System.out.println(" : -> HpUp successful : -> " + hpPlayer);
     }
 
-    public static void bombNumberUp(double bombNumberUp) {
-        System.out.print(
-                bombNumberUp);
-        bombNumber += bombNumberUp;
-        System.out.println(" : -> bombNumberUp successful : -> " + bombNumberUp);
+    public static void bombCoolDown(double bombCoolDown1) {
+        System.out.print(bombCoolDown);
+        bombCoolDown += bombCoolDown1;
+        System.out.println(" : -> bombNumberUp successful : -> " + bombCoolDown);
     }
 
     private List<Entity> getEntitiesList() {

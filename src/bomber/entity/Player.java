@@ -45,9 +45,10 @@ public class Player extends Pawn {
         this.bombRangeBonus = bombRangeBonus;
     }
 
-    public void setBombCoolDown(double bombCoolDown) {
-        for (double v : this.bombCoolDown) {
-            if (v - bombCoolDown > 0) v -= bombCoolDown;
+    public void setBombCoolDown(double bombCoolDown1) {
+        for(int i=0;i<bombCoolDown.length;i++) {
+            if(bombCoolDown[i] - bombCoolDown1 >= 0)
+                bombCoolDown[i] -= bombCoolDown1;
         }
     }
 
@@ -107,7 +108,8 @@ public class Player extends Pawn {
 
 
             } else if (input.contains("V")) {
-                System.out.println("HP : " + health + " Bombankinh : " + bombRangeBonus + " speed : " + speed * (double) Texture.IMAGE_SIZE);
+                System.out.println("HP : " + health + " ,Bombankinh : " + bombRangeBonus + " ,speed : " + speed * (double) Texture.IMAGE_SIZE
+                        + " ,BombCoolDown : " + bombCoolDown[0]);
             } else {
 
             }

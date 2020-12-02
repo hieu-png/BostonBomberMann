@@ -1,7 +1,7 @@
 package bomber.gameFunction;
 
 import bomber.Game;
-import bomber.Item.ItemBombNumberUp;
+import bomber.Item.ItemBombCoolDown;
 import bomber.Item.ItemBombRange;
 import bomber.Item.ItemPlayerHealth;
 import bomber.Item.ItemSpeed;
@@ -213,7 +213,7 @@ public class Map {
         int rdn = Game.randomInt(0, 50);
        // System.out.println("spawned loot: " + rdn);
         switch (rdn) {
-            case 0 -> getGame().addEntity(new ItemBombNumberUp(x, y));
+            case 0 -> getGame().addEntity(new ItemBombCoolDown(x, y));
             case 1 -> getGame().addEntity(new ItemPlayerHealth(x, y));
             case 2 -> getGame().addEntity(new ItemSpeed(x, y));
             case 3 -> getGame().addEntity(new ItemBombRange(x, y));
