@@ -196,16 +196,15 @@ public class Game extends Canvas {
     public void update() {
         getInput();
         //can not remove or add while in the middle of iterating through list, have to use this;
-
+        player.setHealth(hpPlayer);
+        player.setSpeed(playerSpeed);
         for (Entity e : entities) {
             if (e.isToDelete()) {
                 removeEntity(e);
             } else if (e instanceof Item) {
                 if (((Item) e).collided(player)) {
-
                     e.destroy();
-                    player.setHealth(hpPlayer);
-                    player.setSpeed(playerSpeed);
+
 
                     //set bomb range here
 
