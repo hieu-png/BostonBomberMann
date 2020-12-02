@@ -8,6 +8,7 @@ import bomber.Item.ItemSpeed;
 import bomber.StillObject.Tile;
 import bomber.entity.Enemy.Balloon;
 import bomber.entity.Entity;
+import bomber.entity.ExplosionBlast;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -67,7 +68,7 @@ public class Map {
             }
         }
         for (Entity entity : entityList) {
-            if (!(entity instanceof Balloon))
+            if (!(entity instanceof Balloon)&&!(entity instanceof ExplosionBlast))
                 mapInfo[(int) entity.getY()][(int) entity.getX()] = entity.getCanBePassed() ? 0 : 1;
         }
 

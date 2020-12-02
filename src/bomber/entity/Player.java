@@ -41,13 +41,20 @@ public class Player extends Pawn {
         }
     }
 
+    @Override
+    public void setXY(double x, double y) {
+        super.setXY(x, y);
+        toY = y;
+        toX = x;
+    }
+
     public void setBombRangeBonus(int bombRangeBonus) {
         this.bombRangeBonus = bombRangeBonus;
     }
 
     public void setBombCoolDown(double bombCoolDown1) {
-        for(int i=0;i<bombCoolDown.length;i++) {
-            if(bombCoolDown[i] - bombCoolDown1 >= 0)
+        for (int i = 0; i < bombCoolDown.length; i++) {
+            if (bombCoolDown[i] - bombCoolDown1 >= 0)
                 bombCoolDown[i] -= bombCoolDown1;
         }
     }

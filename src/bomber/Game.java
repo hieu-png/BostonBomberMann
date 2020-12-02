@@ -138,8 +138,10 @@ public class Game extends Canvas {
         map.setEntityList(entities);
         map.loadMap(System.getProperty("user.dir") + "\\src\\level\\level" + level + ".txt");
         updateMap();
+
         Gate gate = new Gate(this);
         gate.setXY(WIDTH, HEIGHT / 2 - 1);
+        //gate.setXY(3,1);
         entities.add(gate);
         me = new MapEditor();
         me.setMap(map);
@@ -147,50 +149,42 @@ public class Game extends Canvas {
         //Player
         player = new Player();
         player.setMapRef(map);
-        player.setXY(playerSpawnX, playerSpawnY);
         player.setInput(input);
-        player.setHealth(hpPlayer);
+
         entities.add(player);
+        newLevel(level);
 
-//-------------------------Enemy-----------------------
-        /*
-        Needle b = new Needle();
-        b.setPlayer(player);
-        addEnemy(b, 13, 12);
-
-        SkullHead oneal = new SkullHead();
-        oneal.setPlayer(player);
-        addEnemy(oneal, 14, 12);
-
-        Balloon throughtWall = new Balloon();
-        throughtWall.setPlayer(player);
-        addEnemy(throughtWall, 14, 12);*/
-
-//------------------------End Enemy--------------------------------------------------------------------
-
-//-----------------------Item-----------------------------------------------------------------------------------------
-        /*
-        items.add(new ItemPlayerHealth(2, 1));
-        items.add(new ItemSpeed(6, 10));
-        items.add(new ItemBombRange(11, 4));
-        items.add(new ItemBombNumberUp(3, 1));
-
-        entities.addAll(items);*/
-        spawnEnemy(200);
         userInterface = new InGameUI();
         userInterface.setUp(player, me, this);
-//----------------------End Item---------------------------------------------------------------------------------------
+
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
                 render();
-
                 update();
             }
         };
+
         timer.start();
 
     }
+
+    public void newLevel(int level) {
+
+        entities.forEach(e -> {if(e instanceof Enemy){
+        e.setToDelete(true);}
+        });
+
+        map.loadMap(System.getProperty("user.dir") + "\\src\\level\\level" + level + ".txt");
+        updateMap();
+
+        player.setXY(playerSpawnX, playerSpawnY);
+        player.setHealth(hpPlayer);
+
+        spawnEnemy(1000);
+
+    }
+
     public static void wait(int ms)
     {
         try
@@ -221,19 +215,17 @@ public class Game extends Canvas {
             } else if (e instanceof Item) {
                 if (((Item) e).collided(player)) {
                     e.destroy();
-
-                    // entities.remove(e);
                 }
             } else {
                 e.update();
             }
         }
-        if (gatePassed) {//----------------------------------------------------------------------------------
-            //if(getNumOfEnemy()==0) {
+
+        if (gatePassed) {
             System.out.println("Next Level");
-            newGame();
             mainMenu.nextLevel();
-            // }
+            newGame();
+            gatePassed = false;
 
         }
         while (!addStack.isEmpty()) {
@@ -305,16 +297,17 @@ public class Game extends Canvas {
 
     public void newGame() {
         gc.clearRect(0, 0, this.getWidth(), this.getHeight());
+        /*
         if (!this.entities.isEmpty()) {
             this.entities.clear();
-        }
-        stillObjects.clear();
+        }*/
+        //stillObjects.clear();
         playerSpeed = 2;
         bombLevel = 0;
         hpPlayer = 1;
         bombCoolDown = 0;
         numOfEnemy = 0;
-        player = null;
+        player.setXY(playerSpawnX, playerSpawnY);
     }
 
     public void setGatePassed(boolean gatePassed) {

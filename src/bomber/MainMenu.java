@@ -28,7 +28,8 @@ public class MainMenu extends Application {
 //    public static final int HEIGHT = 9;
     public static final double fontSize = 36;
 
-    private int _level;
+    private int chosenLevel;
+    private final int numberOfLevel = 5;
     private GraphicsContext gc;
     private Game game;
     private Group root;
@@ -44,53 +45,52 @@ public class MainMenu extends Application {
         game = new Game(Texture.IMAGE_SIZE * Map.MAP_WIDTH, Texture.IMAGE_SIZE * (Map.MAP_HEIGHT + 2));
         gc = game.getGraphicsContext2D();
 
-        _level = 1;
+        chosenLevel = 1;
         root = new Group();
         x = game.getWidth();
         y = game.getHeight();
         setBackGround();
         game.setMainMenu(this);
 
-//----------------------render Function---------------------------------
         Text startText = new Text();
         startText.setText("Play");
         startText.setFont(Font.font("Arial", fontSize));
-        System.out.print(startText.getFont());
         startText.setX((x - fontSize * 3.2) / 2);
         startText.setY(y / 3);
         startText.setFill(Color.RED);
+
         root.getChildren().add(startText);
+
         Text levelText = new Text("Level");
         levelText.setFont(Font.font("Arial", fontSize));
         levelText.setX((x - fontSize * 3.2) / 2);
         levelText.setY(y / 3 + 40);
         levelText.setFill(Color.BLUE);
+
         root.getChildren().add(levelText);
-//-------------------End render Function--------------------------------
 
         stage.setTitle("Bomberman");
         stage.setResizable(false);
         Scene scene = new Scene(root);
         scene.setFill(Color.LIGHTGRAY);
 
-        // Them scene vao stage
         stage.setScene(scene);
         game.setScene(scene);
         stage.show();
+
 //--------------------Event--------------------------------------------
         startText.setOnMouseClicked(mouseEvent -> {
             startText.setFill(Color.WHITESMOKE);
             root.getChildren().clear();
             root.getChildren().add(game);
-            game.start(_level);
+            game.start(chosenLevel);
         });
         levelText.setOnMouseClicked(mouseEvent -> {
             levelText.setFill(Color.WHITESMOKE);
             root.getChildren().clear();
             setBackGround();
-            int levels = 2;
-            List<Text> texts = new ArrayList<>(levels);
-            for (int i = 0; i < levels; i++) {
+            List<Text> texts = new ArrayList<>(numberOfLevel);
+            for (int i = 0; i < numberOfLevel; i++) {
                 Text te = new Text("Level " + (i + 1));
                 texts.add(te);
                 te.setFont(Font.font("Arial", 20));
@@ -98,7 +98,7 @@ public class MainMenu extends Application {
                 te.setY(30);//can nang cap
                 int finalI = i;
                 te.setOnMouseClicked(mouseEvent1 -> {
-                    set_level(finalI + 1);
+                    setChosenLevel(finalI + 1);
                     for (Text c : texts) {
                         c.setFill(Color.BLACK);
                     }
@@ -151,7 +151,7 @@ public class MainMenu extends Application {
                     root.getChildren().clear();
                     root.getChildren().add(game);
                     game.newGame();
-                    game.start(_level);
+                    game.newLevel(chosenLevel);
                 }
 
             }
@@ -163,7 +163,7 @@ public class MainMenu extends Application {
             root.getChildren().clear();
             root.getChildren().add(game);
             game.newGame();
-            game.start(_level);
+            game.newLevel(chosenLevel);
         });
     }
 
@@ -185,22 +185,23 @@ public class MainMenu extends Application {
     }
 
     public void nextLevel() {
-        System.out.println("next level");
-        if (_level < 2) _level++;
+        System.out.println("nextLevel called");
+        if (chosenLevel < numberOfLevel) chosenLevel++;
         else {
-            System.out.println("Het level roii");
+            System.out.println("Het level roi");
             System.exit(0);
         }
         root.getChildren().clear();
         root.getChildren().add(game);
-        game.start(_level);
+        game.newLevel(chosenLevel);
     }
 
-    public void set_level(int _level) {
-        this._level = _level;
+    public void setChosenLevel(int chosenLevel) {
+        this.chosenLevel = chosenLevel;
     }
 
     public static void main(String[] args) {
+
         Sound.ThemeSound();
         javafx.application.Application.launch(MainMenu.class);
 
