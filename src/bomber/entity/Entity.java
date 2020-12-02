@@ -70,17 +70,13 @@ public abstract class Entity {
             this.directionFacing = directionFacing;
     }
 
-    public boolean isCollidedWith(Entity other) {
-        if (active) {
-            double b = Math.sqrt(
-                    Math.pow(x - other.getX(), 2) +
-                            Math.pow(y - other.getY(), 2)
-            );
-            return b < 0.5;
-        }
-        return false;
-        //System.out.println(b);
+    public double distanceTo(Entity other) {
+        return Math.sqrt(Math.pow(x - other.getX(), 2) +
+                         Math.pow(y - other.getY(), 2));
+    }
 
+    public boolean isCollidedWith(Entity other) {
+            return distanceTo(other) < 0.5;
     }
 
     public void render(GraphicsContext gc, int x, int y) {

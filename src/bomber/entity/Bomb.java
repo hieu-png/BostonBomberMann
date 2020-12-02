@@ -8,7 +8,6 @@ import bomber.gameFunction.TimeCounter;
 public class Bomb extends Entity {
     Map mapRef;
     boolean exploded = false;
-    int bombPenetration = 1;
     String bombSound;
 
     void changeStat() {
@@ -17,22 +16,24 @@ public class Bomb extends Entity {
         this.timeCounter = new TimeCounter();
     }
 
+    private int penetration = 1;
+
     public Bomb() {
         changeStat();
     }
 
     public Bomb(double x, double y, int range, double fuseTime, Map mapRef,
-                int bombType, int bombPenetration, String bombSound) {
+                int bombType, int penetration,String bombSound, String placementSound) {
 
         super(Game.textureFolderPath + "Bomb" + bombType + ".png");
-        this.bombPenetration = bombPenetration;
         this.x = x;
         this.y = y;
         this.mapRef = mapRef;
         this.range = range;
         this.fuseTime = fuseTime;
         this.bombSound = bombSound;
-        Sound.playSound("beepSmall");
+        this.penetration = penetration;
+        Sound.playSound(placementSound);
         changeStat();
     }
 
@@ -45,7 +46,7 @@ public class Bomb extends Entity {
             exploded = true;
             Sound.playSound(bombSound);
             mapRef.getGame().addEntity(new ExplosionBlast(x, y, range, mapRef,
-                    facingDirection.ALL, 0, bombPenetration));
+                    facingDirection.ALL, 0, penetration));
             setToDelete(true);
         }
     }

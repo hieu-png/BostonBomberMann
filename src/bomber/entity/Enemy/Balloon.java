@@ -2,8 +2,8 @@ package bomber.entity.Enemy;
 
 import bomber.Game;
 
-public class ThroughtWall extends Enemy{
-    public ThroughtWall() {
+public class Balloon extends Enemy{
+    public Balloon() {
         super("balloon");
     }
     public void start() {

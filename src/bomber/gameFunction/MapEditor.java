@@ -100,22 +100,13 @@ public class MapEditor {
             }
             if (game.input.contains("Z")) {
                 if (bombCounter.getTime() > bombRate) {
-                    game.addEntity(new Bomb(x, y, 1, 2, map, 1, 1, "explosionBomb"));
+                    game.addEntity(new Bomb(x, y, 1, 2, map,
+                            1,1, "explosionBomb",
+                            "placeGentle"));
                     bombCounter.resetCounter();
                 }
             }
-            if (game.input.contains("X")) {
-                if (bombCounter.getTime() > bombRate) {
-                    game.addEntity(new Bomb(x, y, 5, 3, map, 2, 1, "explosionFlame"));
-                    bombCounter.resetCounter();
-                }
-            }
-            if (game.input.contains("C")) {
-                if (bombCounter.getTime() > bombRate) {
-                    game.addEntity(new Bomb(x, y, 30, 2, map, 5, 5, "explosionBig"));
-                    bombCounter.resetCounter();
-                }
-            }
+
         }
     }
 
