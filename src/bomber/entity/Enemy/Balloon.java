@@ -2,17 +2,19 @@ package bomber.entity.Enemy;
 
 import bomber.Game;
 
-public class Balloon extends Enemy{
+public class Balloon extends Enemy {
     public Balloon() {
         super("balloon");
     }
+
     public void start() {
         this.health = 1;
         this.setSpeed(1);
         canBePassed = true;
     }
+
     public void movement() {
-        enemyAI = new EnemyAI(player,this);
+        enemyAI = new EnemyAI(player, this);
         if (updateCounter > updateRate && !isMoving()) {
             switch (enemyAI.getDirection()) {
                 case WEST:
@@ -27,18 +29,20 @@ public class Balloon extends Enemy{
                 case NORTH:
                     toY--;
                     break;
-                default: break;
+                default:
+                    break;
             }
         }
     }
 
     @Override
     public boolean checkIfTileEmpty(double x, double y) {
-        if (x <= Game.WIDTH - 1 && y <= Game.HEIGHT - 1 && x >= 0 && y >= 0)
+        if (x <= Game.WIDTH - 1 && y <= Game.HEIGHT - 1 && x > 0 && y > 0)
             return true;
         else
             return false;
     }
+
     @Override
     public void update() {
         updateCounter++;

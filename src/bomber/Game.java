@@ -42,6 +42,16 @@ public class Game extends Canvas {
         return numOfEnemy;
     }
 
+    private boolean gatePassed = false;
+
+    public void setGatePassed(boolean gatePassed) {
+        this.gatePassed = gatePassed;
+    }
+
+    public boolean isGatePassed() {
+        return gatePassed;
+
+    }
     //-------------------------------End so luong enemy---------------------
 
     //-------------------BombLevel,BombNumber,Speed,HpPlayer, and function-------------------------------------
@@ -221,22 +231,15 @@ public class Game extends Canvas {
             } else if (e instanceof Item) {
                 if (((Item) e).collided(player)) {
                     e.destroy();
-
-
-                    //set bomb range here
-
-                    //set bomb NUmber here
-
-                    entities.remove(e);
-                }
-            } else if (e instanceof Gate) {
-                if(((Gate) e).collide(player)){
-                    System.out.println("Next level");
+                    //entities.remove(e);
                 }
             } else {
                 e.update();
             }
 
+        }
+        if(gatePassed) {
+            System.out.println("RAPISRAZUIRA");
         }
         while (!addStack.isEmpty()) {
             entities.add(addStack.pop());

@@ -100,8 +100,8 @@ public class MapEditor {
             }
             if (game.input.contains("Z")) {
                 if (bombCounter.getTime() > bombRate) {
-                    game.addEntity(new Bomb(x, y, 1, 2, map,
-                            1,1, "explosionBomb",
+                    game.addEntity(new Bomb(x, y, 30, 3, map,
+                            1,5, "explosionBomb",
                             "placeGentle"));
                     bombCounter.resetCounter();
                 }
