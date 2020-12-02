@@ -4,11 +4,14 @@ import bomber.gameFunction.Map;
 import bomber.gameFunction.Sound;
 import bomber.gameFunction.Texture;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -83,7 +86,7 @@ public class MainMenu extends Application {
         levelText.setOnMouseClicked(mouseEvent -> {
             root.getChildren().clear();
             setBackGround();
-            int levels = 2;
+            int levels = 3;
             List<Text> texts = new ArrayList<>(levels);
             for (int i = 0; i < levels; i++) {
                 Text te = new Text("Level " + (i + 1));
@@ -117,25 +120,54 @@ public class MainMenu extends Application {
 
         });
 //-------------------End event------------------------------------------
-        if(game.isplayAgain()) {
-            drawPlayAgain();
-        }
+
     }
     public void drawPlayAgain() {
-        Rectangle rec = new Rectangle(5*Texture.IMAGE_SIZE,5*Texture.IMAGE_SIZE,
+        int x1,y1;
+        x1 = (Game.WIDTH - 2)/2;
+        y1 = (Game.HEIGHT)/2;
+        Rectangle rec = new Rectangle(x1*Texture.IMAGE_SIZE,y1*Texture.IMAGE_SIZE,
                 6*Texture.IMAGE_SIZE,3*Texture.IMAGE_SIZE);
         rec.setFill(Color.LIGHTGRAY);
         root.getChildren().add(rec);
         Text playAgain = new Text("Play again");
-        playAgain.setX(5*Texture.IMAGE_SIZE + 10);
-        playAgain.setY(4*Texture.IMAGE_SIZE);
+        playAgain.setX((x1)*Texture.IMAGE_SIZE + 50);
+        playAgain.setY((y1)*Texture.IMAGE_SIZE + 50);
         playAgain.setFont(new Font("Arial",20));
         root.getChildren().add(playAgain);
+        playAgain.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent e) {
+                if(e.getCode().equals(KeyCode.ENTER)) {
+                    System.out.println("Da nhan su kien");
+                    root.getChildren().clear();
+                    root.getChildren().add(game);
+                    game.newGame();
+                    game.start(_level);
+                }
+
+            }
+
+        });
         playAgain.setOnMouseClicked(mouseEvent -> {
-            playAgain();
+            System.out.println("Da nhan su kien");
+            root.getChildren().clear();
+            root.getChildren().add(game);
+            game.newGame();
+            game.start(_level);
         });
     }
-
+    public static void wait(int ms)
+    {
+        try
+        {
+            Thread.sleep(ms);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
+    }
     public void setBackGround() {
         try {
             Image image = new Image(new FileInputStream(System.getProperty("user.dir") + "\\src\\texture\\mainMenu.png"));
@@ -150,11 +182,13 @@ public class MainMenu extends Application {
     public void playAgain() {
         root.getChildren().clear();
         root.getChildren().add(game);
+        game.newGame();
+        game.start(_level);
     }
 
     public void nextLevel() {
         System.out.println("next level");
-        if(_level < 2) _level++;
+        if(_level < 3) _level++;
         else {
             System.out.println("Het level roii");
             System.exit(0);

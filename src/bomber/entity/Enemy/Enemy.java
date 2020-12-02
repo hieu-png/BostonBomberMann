@@ -15,8 +15,8 @@ public abstract class Enemy extends Pawn {
     protected double rdmNoiseRate = noiseRate;
     TimeCounter noiseIdleCounter = new TimeCounter();
     Player player;
-//------------AIbotCui-------------
-    protected EnemyAI enemyAI = new EnemyAI(player,this);
+    //------------AIbotCui-------------
+    protected EnemyAI enemyAI = new EnemyAI(player, this);
 
 
 //------------End AIbotCui----------
@@ -24,9 +24,9 @@ public abstract class Enemy extends Pawn {
 
     public void enemyIdleNoise() {
         Sound sound = new Sound();
-        if(noiseIdleCounter.getTime() > rdmNoiseRate) {
-            sound.playSound(label+"Idle");
-            rdmNoiseRate = Game.randomDouble(noiseRate*0.75, noiseRate*1.5f);
+        if (noiseIdleCounter.getTime() > rdmNoiseRate) {
+            sound.playSound(label + "Idle");
+            rdmNoiseRate = Game.randomDouble(noiseRate * 0.75, noiseRate * 1.5f);
             noiseIdleCounter.resetCounter();
         }
     }
@@ -49,11 +49,15 @@ public abstract class Enemy extends Pawn {
     }
 
     protected void checkPlayer() {
-        if(player != null)
-        if (this.isCollidedWith(player)) {
-            this.dealDamage(1, player);
-        }
+        if (player != null)
+            if (this.isCollidedWith(player)&& player.getHealth() > 0) {
+
+                Game.setHpPlayer(player.getHealth() - 1);
+                //this.dealDamage(1, player);
+
+            }
     }
-
-
 }
+
+
+

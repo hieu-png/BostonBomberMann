@@ -13,7 +13,7 @@ public class Player extends Pawn {
     List<Bomb> bombs;
     List<Enemy> enemyList = new ArrayList<>();
     ArrayList<String> input;
-
+    int MaxLevel = 3;
     public void setInput(ArrayList<String> input) {
         this.input = input;
     }
@@ -84,7 +84,9 @@ public class Player extends Pawn {
     public void createNormalBomb() {
 
     }
-
+    public void isLive(){
+        if(this.health <= 0) active = false;
+    }
     boolean moved = true;
 
     public void handleInput() {
@@ -187,10 +189,9 @@ public class Player extends Pawn {
 
     @Override
     public void update() {
-        //checkCollision();
+        isLive();
         updateMapInfo();
         handleInput();
         move();
-
     }
 }

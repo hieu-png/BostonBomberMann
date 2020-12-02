@@ -153,9 +153,25 @@ public class Game extends Canvas {
         timer.start();
 
     }
-
+    public static void wait(int ms)
+    {
+        try
+        {
+            Thread.sleep(ms);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
+    }
     public void update() {
         getInput();
+        if(!player.getActive()) {
+            System.out.println("Player Dead");
+            mainMenu.drawPlayAgain();
+            //wait(10);
+//            mainMenu.playAgain();
+        }
         //can not remove or add while in the middle of iterating through list, have to use this;
         player.setHealth(hpPlayer);
         player.setSpeed(playerSpeed);
@@ -175,9 +191,12 @@ public class Game extends Canvas {
             }
         }
         if (gatePassed) {//----------------------------------------------------------------------------------
+            //if(getNumOfEnemy()==0) {
             System.out.println("Next Level");
             newGame();
             mainMenu.nextLevel();
+            // }
+
         }
         while (!addStack.isEmpty()) {
             entities.add(addStack.pop());
@@ -336,7 +355,7 @@ public class Game extends Canvas {
         return entities;
     }
 
-    public static void setHpPlayer(int hpPlayer1){
+    public static void setHpPlayer(int hpPlayer1) {
         hpPlayer = hpPlayer1;
     }
 }
