@@ -16,19 +16,14 @@ public class Balloon extends Enemy {
     public void movement() {
         enemyAI = new EnemyAI(player, this);
         if (updateCounter > updateRate && !isMoving()) {
-            switch (enemyAI.getDirection()) {
-                case WEST:
-                    toX--;
+            switch (Game.randomInt(0,6)) {
+                case 1: toX++;
                     break;
-                case EAST:
-                    toX++;
+                case 2: toY++;
                     break;
-                case SOUTH:
-                    toY++;
+                case 3: toX--;
                     break;
-                case NORTH:
-                    toY--;
-                    break;
+                case 4: toY--;
                 default:
                     break;
             }

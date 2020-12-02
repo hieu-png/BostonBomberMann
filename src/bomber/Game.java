@@ -1,8 +1,6 @@
 package bomber;
 
-import bomber.Item.Item;
-import bomber.Item.ItemPlayerHealth;
-import bomber.Item.ItemSpeed;
+import bomber.Item.*;
 import bomber.StillObject.Gate;
 import bomber.StillObject.Tile;
 import bomber.entity.Enemy.Balloon;
@@ -31,11 +29,8 @@ public class Game extends Canvas {
     public static final int HEIGHT = 12;
     public double mouseX = 0;
     public double mouseY = 0;
-    public MainMenu mainMenu = new MainMenu();
 
-    public MainMenu getMainMenu() {
-        return mainMenu;
-    }
+
 
     //-------------------So luong Enemy dang trong map------------------
     public int numOfEnemy = 0;
@@ -49,6 +44,9 @@ public class Game extends Canvas {
     public void setGatePassed(boolean gatePassed) {
         this.gatePassed = gatePassed;
     }
+    public boolean getGatePassed() {
+        return gatePassed;
+    }
 
     public boolean isGatePassed() {
         return gatePassed;
@@ -61,34 +59,28 @@ public class Game extends Canvas {
     private static double bombLevel = 1;
     private static int hpPlayer = 1;
     private static double bombNumber = 1;
-
     public static void speedUp(double speed) {
         System.out.print(playerSpeed);
         playerSpeed += speed;
         System.out.println(" : -> Speed up successful : -> " + playerSpeed);
     }
-
     public static void bombLevelUp(double bomblevel) {
         System.out.print(playerSpeed);
         bombLevel += bomblevel;
         System.out.println(" : -> bombLevelUp successful : -> " + bomblevel);
 
     }
-
     public static void HpUp(double Hp) {
         System.out.print(hpPlayer);
         hpPlayer += Hp;
         System.out.println(" : -> HpUp successful : -> " + hpPlayer);
     }
-
     public static void bombNumberUp(double bombNumberUp) {
         System.out.print(bombNumberUp);
         bombNumber += bombNumberUp;
         System.out.println(" : -> bombNumberUp successful : -> " + bombNumberUp);
     }
 //---------------------End item,speed,.....---------------------------------
-
-
     public static int randomInt(int min, int max) {
 
         return (int) (Math.random() * (max - min + 1) + min);
@@ -174,7 +166,7 @@ public class Game extends Canvas {
         map.loadMap(System.getProperty("user.dir") + "\\src\\level\\level" + level + ".txt");
         updateMap();
         Gate gate = new Gate(this);
-        gate.setXY(this.WIDTH , this.HEIGHT / 2 + 1);
+        gate.setXY(WIDTH ,HEIGHT/2-1 );
         entities.add(gate);
         me = new MapEditor();
         me.setMap(map);
@@ -203,8 +195,8 @@ public class Game extends Canvas {
 //-----------------------Item-----------------------------------------------------------------------------------------
         items.add(new ItemPlayerHealth(1, 2));
         items.add(new ItemSpeed(1, 3));
-        //items.add(new BombNumberUpItem(2, 1));
-        //items.add(new BombLevelItem(3, 1));
+        items.add(new ItemBombRange(2, 1));
+        items.add(new ItemBombNumberUp(3, 1));
 
         entities.addAll(items);
          userInterface = new InGameUI();
@@ -233,15 +225,15 @@ public class Game extends Canvas {
             } else if (e instanceof Item) {
                 if (((Item) e).collided(player)) {
                     e.destroy();
-                    //entities.remove(e);
+                    entities.remove(e);
                 }
             } else {
                 e.update();
             }
-
         }
-        if(gatePassed) {
+        if(gatePassed) {//----------------------------------------------------------------------------------
             System.out.println("RAPISRAZUIRA");
+            playGame(2);
         }
         while (!addStack.isEmpty()) {
             entities.add(addStack.pop());
@@ -249,12 +241,8 @@ public class Game extends Canvas {
         while (!removeStack.isEmpty()) {
             entities.remove(removeStack.pop());
         }
-
-
         me.update();
-
         updateMap();
-
     }
 
     public void render() {
@@ -281,8 +269,6 @@ public class Game extends Canvas {
     public void getInput() {
         scene.setOnMouseClicked(mouseEvent -> {
             //mouseEvent.getButton()
-
-
         });
         scene.setOnMousePressed(mouseEvent -> {
             String code = mouseEvent.getButton().toString();
@@ -315,5 +301,24 @@ public class Game extends Canvas {
             input.remove(code);
         });
     }
-
+    public void playGame(int level1) {
+        gc.clearRect(0,0,this.getWidth(),this.getHeight());
+        if(!this.entities.isEmpty()) {
+            this.entities.clear();
+        }
+        stillObjects.clear();
+        playerSpeed = 2;
+        bombLevel = 1;
+        hpPlayer = 1;
+        bombNumber = 1;
+        numOfEnemy = 0;
+        player = null;
+        if(!this.items.isEmpty()) this.items.clear();
+        if(level1 <= 2) {
+            this.start(level1);
+        } else {
+            System.out.println("Het Level roi");
+            System.exit(0);
+        }
+    }
 }
