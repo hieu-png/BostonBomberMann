@@ -17,7 +17,9 @@ public class Player extends Pawn {
     public void setInput(ArrayList<String> input) {
         this.input = input;
     }
-
+    public  void healthUp() {
+        health ++;
+    }
     static final int numberOfBombType = 4;
     public int bombRangeBonus = 4;
     private int selectedBomb = 0;
@@ -81,11 +83,12 @@ public class Player extends Pawn {
         this.label = "player";
         canBePassed = true;
         this.setSpeed(2);
+        //this.setHealth(3);
         bombCountdownCounter = new TimeCounter[numberOfBombType];
         for (int i = 0; i < numberOfBombType; i++) {
             bombCountdownCounter[i] = new TimeCounter();
         }
-        double[] b = {2, 2, 2, 2};
+        double[] b = {1, 4, 10, 15};
         bombCoolDown = b;
     }
 
@@ -115,8 +118,8 @@ public class Player extends Pawn {
 
 
             } else if (input.contains("V")) {
-                System.out.println("HP : " + health + " ,Bombankinh : " + bombRangeBonus + " ,speed : " + speed * (double) Texture.IMAGE_SIZE
-                        + " ,BombCoolDown : " + bombCoolDown[0]);
+                System.out.println("HP : " + health + " ,BombRadius : " + bombRangeBonus + " ,speed : " + speed * (double) Texture.IMAGE_SIZE
+                        + " ,BombCoolDown : " + bombCoolDown[0] + ", Des : " + (destructible ? "true" : "false"));
             } else {
 
             }
@@ -142,6 +145,16 @@ public class Player extends Pawn {
 
     }
 
+
+
+    TimeCounter invulCounter = new TimeCounter();
+    public double invulDuration = 1;
+
+    @Override
+    public void onTakeDamage() {
+        invulCounter.resetCounter();
+    }
+
     public boolean isThisBombReady(int index) {
         boolean b = bombCountdownCounter[index].getTime() > bombCoolDown[index];
         if (b) {
@@ -154,7 +167,7 @@ public class Player extends Pawn {
         if (isThisBombReady(0)) {
             mapRef.getGame().addEntity(new Bomb(
                     x, y, 1 + bombRangeBonus,
-                    2, mapRef, 1, 1,
+                    1, mapRef, 1, 1,
                     "explosionBomb", "placeGentle"));
             moved = false;
 
@@ -198,7 +211,18 @@ public class Player extends Pawn {
 
     @Override
     public void update() {
+
+
         isLive();
+
+        if (invulCounter.getTime() < invulDuration) {
+            tempSpeedBoost = 1;
+            destructible = false;
+        }
+        else {
+            tempSpeedBoost = 0;
+            destructible = true;
+        }
         updateMapInfo();
         handleInput();
         move();

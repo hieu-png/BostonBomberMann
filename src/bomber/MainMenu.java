@@ -129,28 +129,33 @@ public class MainMenu extends Application {
         }
     }
 
+    public void addText() {
+        Text healthText;
+        Text coolDownText;
+    }
+
     public void drawPlayAgain() {
-        int x1,y1;
-        x1 = (Game.WIDTH - 2)/2;
-        y1 = (Game.HEIGHT)/2;
-        Rectangle rec = new Rectangle(x1*Texture.IMAGE_SIZE,y1*Texture.IMAGE_SIZE,
-                6*Texture.IMAGE_SIZE,3*Texture.IMAGE_SIZE);
+        int x1, y1;
+        x1 = (Game.WIDTH - 2) / 2;
+        y1 = (Game.HEIGHT) / 2;
+        Rectangle rec = new Rectangle(x1 * Texture.IMAGE_SIZE, y1 * Texture.IMAGE_SIZE,
+                6 * Texture.IMAGE_SIZE, 3 * Texture.IMAGE_SIZE);
         rec.setFill(Color.LIGHTGRAY);
         root.getChildren().add(rec);
         Text playAgain = new Text("Play again");
-        playAgain.setX((x1)*Texture.IMAGE_SIZE + 50);
-        playAgain.setY((y1)*Texture.IMAGE_SIZE + 50);
-        playAgain.setFont(new Font("Arial",20));
+        playAgain.setX((x1) * Texture.IMAGE_SIZE + 50);
+        playAgain.setY((y1) * Texture.IMAGE_SIZE + 50);
+        playAgain.setFont(new Font("Arial", 20));
         root.getChildren().add(playAgain);
         playAgain.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent e) {
-                if(e.getCode().equals(KeyCode.ENTER)) {
+                if (e.getCode().equals(KeyCode.ENTER)) {
                     playAgain.setFill(Color.WHITESMOKE);
                     System.out.println("Da nhan su kien");
                     root.getChildren().clear();
                     root.getChildren().add(game);
-                    game.newGame();
+                    game.newGame(true);
                     game.newLevel(chosenLevel);
                 }
 
@@ -162,7 +167,7 @@ public class MainMenu extends Application {
             System.out.println("Da nhan su kien");
             root.getChildren().clear();
             root.getChildren().add(game);
-            game.newGame();
+            game.newGame(true);
             game.newLevel(chosenLevel);
         });
     }

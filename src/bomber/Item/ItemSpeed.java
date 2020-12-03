@@ -12,7 +12,7 @@ public class ItemSpeed extends Item {
     }
 
     @Override
-    public void doThisWhenCollided() {
+    public void doThisWhenCollided(Player player) {
         Sound.getItem();
         Game.speedUp(1);
     }

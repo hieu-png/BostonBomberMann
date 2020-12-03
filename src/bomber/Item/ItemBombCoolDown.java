@@ -1,6 +1,7 @@
 package bomber.Item;
 
 import bomber.Game;
+import bomber.entity.Player;
 import bomber.gameFunction.Sound;
 
 public class ItemBombCoolDown extends Item {
@@ -10,7 +11,7 @@ public class ItemBombCoolDown extends Item {
     }
 
     @Override
-    public void doThisWhenCollided() {
+    public void doThisWhenCollided(Player player) {
         Sound.getItem();
         Game.bombCoolDown(1);
     }

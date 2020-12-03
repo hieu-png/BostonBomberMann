@@ -12,7 +12,8 @@ public class ItemPlayerHealth extends Item {
     }
 
     @Override
-    public void doThisWhenCollided() {
+    public void doThisWhenCollided(Player player) {
+        player.healthUp();
         Sound.getItem();
         Game.HpUp(1);
     }

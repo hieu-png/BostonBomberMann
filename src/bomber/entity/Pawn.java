@@ -8,12 +8,17 @@ public abstract class Pawn extends Entity {
     protected Map mapRef;
     protected double toX = x, toY = y;
     protected double speed = 2 / (double) Texture.IMAGE_SIZE;
+    protected double tempSpeedBoost = 0;
     protected int[][] mapInfo;
     protected int mapUpdateRate = 5;
     protected int mapUpdateCounter = 0;
 
     public void setSpeed(double speed) {
-        this.speed = speed / (double) Texture.IMAGE_SIZE;
+        this.speed = (speed + tempSpeedBoost) / (double) Texture.IMAGE_SIZE;
+    }
+
+    public double getTempSpeedBoost() {
+        return tempSpeedBoost / (double) Texture.IMAGE_SIZE;
     }
 
     public void setMapRef(Map mapRef) {
@@ -56,8 +61,12 @@ public abstract class Pawn extends Entity {
 
     }
 
+    public double getSpeed() {
+        return speed + getTempSpeedBoost();
+    }
+
     public double moveDirection(Double currentCoordinate, Double targetCoordinate) {
-        double distanceToChange = speed;
+        double distanceToChange = getSpeed();
         //Smooth distance to change to not pass over
         if (Math.abs(currentCoordinate - targetCoordinate) < distanceToChange) {
             distanceToChange = Math.abs(currentCoordinate - targetCoordinate);

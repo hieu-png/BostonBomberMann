@@ -56,7 +56,7 @@ public class Sound  {
 
     public static void ThemeSound() {
 
-        //loopSound("burningMemory");
+        loopSound("burningMemory");
     }
 
 }

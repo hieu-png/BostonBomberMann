@@ -39,7 +39,7 @@ public class Game extends Canvas {
 
     private static double playerSpeed = 2;
     private static int bombLevel = 0;
-    private static int hpPlayer = 1;
+    private static int hpPlayer = 2;
     private static double bombCoolDown = 0;
 
 
@@ -180,9 +180,9 @@ public class Game extends Canvas {
 
         player.setXY(playerSpawnX, playerSpawnY);
         player.setHealth(hpPlayer);
-
-        spawnEnemy(1000);
-
+        player.setActive(true);
+        spawnEnemy(150);
+        isShown = false;
     }
 
     public static void wait(int ms)
@@ -196,16 +196,17 @@ public class Game extends Canvas {
             Thread.currentThread().interrupt();
         }
     }
+    boolean isShown = false;
     public void update() {
         getInput();
-        if(!player.getActive()) {
+        if(!player.getActive()&&!isShown) {
             System.out.println("Player Dead");
             mainMenu.drawPlayAgain();
+            isShown = true;
             //wait(10);
 //            mainMenu.playAgain();
         }
         //can not remove or add while in the middle of iterating through list, have to use this;
-        player.setHealth(hpPlayer);
         player.setSpeed(playerSpeed);
         player.setBombRangeBonus(bombLevel);
         player.setBombCoolDown(bombCoolDown);
@@ -224,7 +225,7 @@ public class Game extends Canvas {
         if (gatePassed) {
             System.out.println("Next Level");
             mainMenu.nextLevel();
-            newGame();
+            newGame(false);
             gatePassed = false;
 
         }
@@ -295,18 +296,21 @@ public class Game extends Canvas {
         });
     }
 
-    public void newGame() {
+    public void newGame(boolean resetStat) {
         gc.clearRect(0, 0, this.getWidth(), this.getHeight());
         /*
         if (!this.entities.isEmpty()) {
             this.entities.clear();
         }*/
         //stillObjects.clear();
+        if(resetStat) {
+        player.setHealth(hpPlayer);
         playerSpeed = 2;
         bombLevel = 0;
-        hpPlayer = 1;
+        hpPlayer = 2;
         bombCoolDown = 0;
         numOfEnemy = 0;
+        }
         player.setXY(playerSpawnX, playerSpawnY);
     }
 

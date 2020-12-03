@@ -53,6 +53,8 @@ public abstract class Enemy extends Pawn {
         if(player != null)
         if (this.isCollidedWith(player)) {
             this.dealDamage(1, player);
+        } else {
+            System.out.println(label + " checked for player.");
         }
     }
 

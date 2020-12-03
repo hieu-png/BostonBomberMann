@@ -16,12 +16,12 @@ public abstract class Item extends Tile {
         this.destructible = false;
     }
 
-    public abstract void doThisWhenCollided();
+    public abstract void doThisWhenCollided(Player player);
 
     public boolean collided(Entity other) {
         if (other instanceof Player) {
             if (!isCollected && this.isCollidedWith(other)) {
-                doThisWhenCollided();
+                doThisWhenCollided((Player)other);
                 destroy();
                 isCollected = true;
             }

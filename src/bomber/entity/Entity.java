@@ -154,16 +154,21 @@ public abstract class Entity {
     public boolean dealDamage(int damage, Entity other) {
         return other.takeDamage(damage);
     }
+    public void onTakeDamage() {
 
+    }
     public boolean takeDamage(int damage) {
         if (destructible) {
             health -= damage;
-            if (health <= 0) {
+            if (health <= 0)
+            {
                 if(destroyOnDeath)
                     destroy();
                     else
                 deactivate();
-            }
+            } else
+                onTakeDamage();
+
             return true;
         } else {
             return false;
